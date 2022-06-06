@@ -238,5 +238,37 @@ nav ul li{
     padding: 80px;
 }
 
+.font-italic{
+    font-style: italic;
+}
+
+.background-content{
+    background: #f8f9fa;
+    width: 100%;
+    height: 300px;
+}
+
+.image-container{
+    height: 150%;
+    width: 100%;
+}
+
+.about-text{
+    margin: 0;
+}
+
+.font-text{
+    color: #adadad;
+}
+
+.card-container{
+    padding: 60px;
+}
+
+.card-content{
+    padding: 20px;
+}
+
+
 
 
