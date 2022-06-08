@@ -51,7 +51,7 @@ class AdminHelper:
         :param newAdmin: admin baru yang diganti
         :return:
         """
-        the_admin: AdminModel = self.read_one(idAdmin)
+        the_admin: AdminModel = self.read_one_by_user(idAdmin)
         with Session(self.engine) as session:
             the_admin.username = newAdmin.username
             the_admin.password = newAdmin.password
@@ -64,7 +64,7 @@ class AdminHelper:
         :param idAdmin: id admin yang dicari
         :return:
         """
-        the_admin: AdminModel = self.read_one(idAdmin)
+        the_admin: AdminModel = self.read_one_by_user(idAdmin)
         with Session(self.engine) as session:
             session.delete(the_admin)
             session.commit()
@@ -78,7 +78,7 @@ class AdminHelper:
         with Session(self.engine) as session:
             return session.query(AdminModel)
 
-    def read_one(self, username):
+    def read_one_by_user(self, username):
         """
         Query salah satu dari isi tabel admin
         berdasarkan username
@@ -87,4 +87,15 @@ class AdminHelper:
         """
         with Session(self.engine) as session:
             stmt = select(AdminModel).where(AdminModel.username == username)
+            return session.scalars(stmt).one()
+
+    def read_one(self, id):
+        """
+        Query salah satu dari isi tabel admin
+        berdasarkan id
+        :param id: Admin yang akan dicari
+        :return:
+        """
+        with Session(self.engine) as session:
+            stmt = select(AdminModel).where(AdminModel.id == id)
             return session.scalars(stmt).one()

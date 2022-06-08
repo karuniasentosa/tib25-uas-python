@@ -19,8 +19,6 @@ class GedungModel(Base):
     image_path = Column(String)
     deskripsi = Column(String, nullable=False)
     base_price = Column('base_price_in_hrs', Integer, nullable=False)
-    kapasitas = Column(Integer, nullable=False)
-    luas = Column(Integer, nullable=False)
 
     def __init__(self, id, nama, image_path, deskripsi, base_price, kapasitas, luas):
         self.id = id
@@ -28,8 +26,6 @@ class GedungModel(Base):
         self.image_path = image_path
         self.deskripsi = deskripsi
         self.base_price = base_price
-        self.kapasitas = kapasitas
-        self.luas = luas
 
 
 class GedungHelper:
@@ -62,8 +58,6 @@ class GedungHelper:
             the_gedung.deskripsi = newGedung.deskripsi
             the_gedung.image_path = newGedung.image_path
             the_gedung.base_price = newGedung.base_price
-            the_gedung.kapasitas = newGedung.kapasitas
-            the_gedung.luas = newGedung.luas
             session.add(the_gedung)
             session.commit()
 

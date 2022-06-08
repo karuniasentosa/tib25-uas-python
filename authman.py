@@ -1,3 +1,5 @@
+import time
+
 from sqlalchemy.engine import Engine
 
 from werkzeug.security import generate_password_hash, \
@@ -18,7 +20,7 @@ class AuthMan:
         the_admin: AdminModel  # buat variabel terlebih dahulu
 
         with AdminHelper(engine) as helper:
-            the_admin = helper.read_one(username)  # minta cari admin berdasarkan username
+            the_admin = helper.read_one_by_user(username)  # minta cari admin berdasarkan username
 
         if the_admin is None:  # langsung return False jika tidak ditemukan
             return False
@@ -39,6 +41,7 @@ class AuthMan:
     @staticmethod
     def register(engine: Engine, username, password):
         new_admin: AdminModel = AdminModel()
+        new_admin.id = (time.time()*100)
         new_admin.username = username
         new_admin.password = generate_password_hash(password)
         with AdminHelper(engine) as helper:

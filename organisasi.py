@@ -14,15 +14,15 @@ class OrganisasiModel(Base):
     """
     __tablename__='organisasi'
     id = Column(Integer, primary_key=True)
-    nama_organisasi = Column(String, nullable=False)
-    nama_penanggungjawab = Column(String, nullable=False)
+    nama_organisasi = Column(String, nullable=False, unique=True)
     email = Column(String, nullable=False)
+    no_telp = Column(String, nullable=False)
 
-    def __init__(self, id, nama_organisasi, nama_penanggungjawb, email):
+    def __init__(self, id, nama_organisasi, email, no_telp):
         self.id = id
         self.nama_organisasi = nama_organisasi
-        self.nama_penanggungjawab = nama_penanggungjawb
         self.email = email
+        self.no_telp = no_telp
 
 
 class OrganisasiHelper:
@@ -52,8 +52,8 @@ class OrganisasiHelper:
         the_organisasi: OrganisasiModel = self.read_one(idOrganisasi)
         with Session(self.engine) as session:
             the_organisasi.nama_organisasi = newOrganisasi.nama_organisasi
-            the_organisasi.nama_penanggungjawab = newOrganisasi.nama_penanggungjawab
             the_organisasi.email = newOrganisasi.email
+            the_organisasi.no_telp = newOrganisasi.no_telp
             session.add(the_organisasi)
             session.commit()
 
@@ -85,3 +85,14 @@ class OrganisasiHelper:
         with Session(self.engine) as session:
             stmt = select(OrganisasiModel).where(OrganisasiModel.id == idOrganisasi)
             return session.scalars(stmt).one()
+
+    def read_one_by_name(self, name):
+        """
+        Query salahs atu isi dari tebal organisais
+        berdasarkan nama organisasi
+        :param name: nama organisasi yang ingin dicair
+        :return:
+        """
+        with Session(self.engine) as session:
+            stmt = select(OrganisasiModel).where(OrganisasiModel.nama_organisasi == name)
+            return session.scalars(stmt).one_or_none()

@@ -15,18 +15,33 @@ class BookingModel(Base):
     """
     Model class untuk tabel booking
     """
-    __tablename__='booking'
+    __tablename__ = 'booking'
     id = Column(Integer, primary_key=True)
     gedung_id = Column(Integer, ForeignKey(GedungModel.id), nullable=False)
+    nama_penanggungjawab = Column(String)
     penyewa = Column(Integer, ForeignKey(OrganisasiModel.id), nullable=False)
-    start_datetime = Column(String, nullable=False)
-    end_datetime = Column(String, nullable=False)
+    start_date = Column(String, nullable=False)
+    end_date = Column(String, nullable=False)
+    start_time = Column(String, nullable=False)
+    end_time = Column(String, nullable=False)
+
+    def __init__(self, id, gedung_id, nama_penanggungjawab, penyewa, start_datetime, end_datetime, start_time,
+                 end_time):
+        self.id = id
+        self.gedung_id = gedung_id
+        self.nama_penanggungjawab = nama_penanggungjawab
+        self.penyewa = penyewa
+        self.start_date = start_datetime
+        self.end_date = end_datetime
+        self.start_time = start_time
+        self.end_time = end_time
 
 
 class BookingHelper:
     """
     Class helper untuk table booking
     """
+
     def __init__(self, engine: Engine):
         self.engine = engine
 
@@ -49,7 +64,8 @@ class BookingHelper:
         the_booking: BookingModel = self.read_one(idBooking)
         with Session(self.engine) as session:
             the_booking.gedung_id = newBooking.gedung_id
-            the_booking.penyewa = newBooking.penyewa # TODO: Masuk akal gak sih?
+            the_booking.penyewa = newBooking.penyewa  # TODO: Masuk akal gak sih?
+            the_booking.nama_penanggungjawab = newBooking.nama_penanggungjawab
             the_booking.start_datetime = newBooking.start_datetime
             the_booking.end_datetime = newBooking.end_datetime
             session.add(the_booking)
