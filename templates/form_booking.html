@@ -66,8 +66,16 @@
                     </div>
                     <br>
                     <!--TODO: Auto Input setelah memasukkan nama oorgnaisasi-->
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                    <div class="row">
+                        <div class="col">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                        </div>
+                        <div class="col">
+                            <label for="Nomor-Telepon" class="form-label">Nomor Telepon</label>
+                            <input type="tel" class="form-control" name="Nomor-Telepon" id="Nomor-Telepon" placeholder="0123456789" required>
+                        </div>
+                    </div>
                     <br>
                     <div class="row">
                         <div class="col">
@@ -133,6 +141,21 @@
             navbar.classList.remove("sticky");
         }
     }
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("start-date").setAttribute("min", today);
+    document.getElementById("end-date").setAttribute("min", today);
 </script>
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
