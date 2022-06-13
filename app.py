@@ -1,5 +1,5 @@
 import secrets
-import time
+from datetime import datetime as dt
 
 from flask import Flask, request, redirect, url_for, render_template, abort, jsonify
 from sqlalchemy import create_engine
@@ -182,6 +182,23 @@ def get_company_mail_and_phone():
     org_phone = organisasi.no_telp
     jsonData = {'email': org_email, 'phone': org_phone}
     return jsonify(jsonData)
+
+
+@app.route('/_/calbookprice', methods=['post'])
+def calculate_booking_price():
+    start_date = dt.strptime(request.form['start_date'], '%Y-%m-%d')
+    end_date = dt.strptime(request.form['end_date'], '%Y-%m-%d')
+    start_time = dt.strptime(request.form['start_time'], '%H:%M')
+    end_time = dt.strptime(request.form['end_time'], '%H:%M')
+    gedung: GedungModel = gedung_helper.read_one(request.form['gedung_id'])
+
+    diffdays = (end_date - start_date).days + 1
+    diffhour = (end_time.hour - start_time.hour)
+
+    price = gedung.base_price * (diffhour * diffdays)
+
+    return str(price)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
