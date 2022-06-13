@@ -95,7 +95,7 @@
                         </div>
                         <div class="col">
                             <label for="end-time" class="form-label">Jam Berakhir</label>
-                            <input type="time" id="end-time" name="end_time" min="00:00" max="23:00" class="form-control" required>
+                            <input type="time" id="end-time" name="end_time" class="form-control" required>
                         </div>
                     </div>
                     <br>
@@ -142,20 +142,33 @@
         }
     }
 
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1;
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd
-    }
-    if(mm<10){
-        mm='0'+mm
-    }
-
-    today = yyyy+'-'+mm+'-'+dd;
-    document.getElementById("start-date").setAttribute("min", today);
-    document.getElementById("end-date").setAttribute("min", today);
+   var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var startTime = today.getHours() + ":" + today.getMinutes();
+        var startDate = document.getElementById("start-date");
+        var endDate = document.getElementById("end-date");
+        var addHours = (today.getHours() + 1) +":" + today.getMinutes();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+        startDate.onchange = ()=> {
+            if(startDate.value == today){
+                document.getElementById("start-time").setAttribute("min", startTime);
+            }
+        }
+        endDate.onchange = ()=>{
+            if(endDate.value == today){
+                document.getElementById("end-time").setAttribute("min",addHours);
+            }
+        }
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("start-date").setAttribute("min", today);
+        document.getElementById("end-date").setAttribute("min", today);
 </script>
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
