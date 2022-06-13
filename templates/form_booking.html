@@ -51,7 +51,8 @@
                     <div class="row">
                         <div class="col">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama_penanggungjawab" placeholder="" required>
+                            <input type="text" class="form-control" id="nama" name="nama_penanggungjawab" placeholder=""
+                                   required>
                         </div>
                         <div class="col">
                             <label for="nama-perusahaan" class="form-label">Nama Perusahaan</label>
@@ -59,7 +60,7 @@
                                    name="nama_organisasi" placeholder="cari disini ..." required>
                             <datalist id="nama-org">
                                 {% for org in orgs %}
-                                    <option value="{{ org.nama_organisasi }}"> </option>
+                                    <option value="{{ org.nama_organisasi }}"></option>
                                 {% endfor %}
                             </datalist>
                         </div>
@@ -69,41 +70,48 @@
                     <div class="row">
                         <div class="col">
                             <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                            <input type="email" class="form-control" name="email" id="email"
+                                   placeholder="name@example.com" required>
                         </div>
                         <div class="col">
                             <label for="Nomor-Telepon" class="form-label">Nomor Telepon</label>
-                            <input type="tel" class="form-control" name="Nomor-Telepon" id="Nomor-Telepon" placeholder="0123456789" required>
+                            <input type="tel" class="form-control" name="nomor_telepon" id="nomor-telepon"
+                                   placeholder="0123456789" required>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col">
                             <label for="start-date" class="form-label">Mulai tanggal</label>
-                            <input type="date" id="start-date" name="start_date" class="form-control" placeholder="DD/MM/YYYY" required>
+                            <input type="date" id="start-date" name="start_date" class="form-control"
+                                   placeholder="DD/MM/YYYY" required>
                         </div>
                         <div class="col">
                             <label for="end-date" class="form-label">Sampai tanggal</label>
-                            <input type="date" id="end-date" name="end_date" class="form-control" placeholder="DD/MM/YYYY" required>
+                            <input type="date" id="end-date" name="end_date" class="form-control"
+                                   placeholder="DD/MM/YYYY" required>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col">
                             <label for="start-time" class="form-label">Jam Mulai</label>
-                            <input type="time" id="start-time" name="start_time" min="00:00" max="23:00" class="form-control" required>
+                            <input type="time" id="start-time" name="start_time" min="00:00" max="23:00"
+                                   class="form-control" required>
                         </div>
                         <div class="col">
                             <label for="end-time" class="form-label">Jam Berakhir</label>
-                            <input type="time" id="end-time" name="end_time" class="form-control" required>
+                            <input type="time" id="end-time" name="end_time" min="00:00" max="23:00"
+                                   class="form-control" required>
                         </div>
                     </div>
                     <br>
                     <label for="gedung" class="form-label">Gedung</label>
-                    <select class="form-select" id="gedung" name="gedung_id" aria-label="Default select example" required>
+                    <select class="form-select" id="gedung" name="gedung_id" aria-label="Default select example"
+                            required>
                         <option selected value="">Pilih disini ...</option>
                         {% for gedung in gedungs %}
-                        <option value="{{ gedung.id }}">{{ gedung.nama }}</option>
+                            <option value="{{ gedung.id }}">{{ gedung.nama }}</option>
                         {% endfor %}
                     </select>
                     <br>
@@ -142,33 +150,80 @@
         }
     }
 
-   var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-        var startTime = today.getHours() + ":" + today.getMinutes();
-        var startDate = document.getElementById("start-date");
-        var endDate = document.getElementById("end-date");
-        var addHours = (today.getHours() + 1) +":" + today.getMinutes();
-        if(dd<10){
-            dd='0'+dd
+    // Javascript has terrible Date API's.
+    Date.prototype.addHours = (h) => {
+        this.setHours(this.getHours() + h)
+        return this;
+    }
+
+    Date.prototype.toISO8601TimeString = (useSeconds) => {
+        if (useSeconds) {
+            return `${this.getHours()}:${this.getMinutes()}:${this.getSeconds()}`
+        } else {
+            return `${this.getHours()}:${this.getMinutes()}`
         }
-        if(mm<10){
-            mm='0'+mm
+    }
+
+    Date.prototype.toISO8601DateString = () => {
+        return `${this.getFullYear()}-${this.getMonth() + 1}-${this.getDate()}`
+    }
+
+
+    var today = new Date();
+
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    var startTime = today.getHours() + ":" + today.getMinutes();
+    var startDate = document.getElementById("start-date");
+    var endDate = document.getElementById("end-date");
+    var addHours = (today.getHours() + 1) + ":" + today.getMinutes();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    startDate.onchange = () => {
+        if (startDate.value == today) {
+            document.getElementById("start-time").setAttribute("min", startTime);
         }
-        startDate.onchange = ()=> {
-            if(startDate.value == today){
-                document.getElementById("start-time").setAttribute("min", startTime);
-            }
+    }
+    endDate.onchange = () => {
+        if (endDate.value == today) {
+            document.getElementById("end-time").setAttribute("min", addHours);
         }
-        endDate.onchange = ()=>{
-            if(endDate.value == today){
-                document.getElementById("end-time").setAttribute("min",addHours);
-            }
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("start-date").setAttribute("min", today);
+    document.getElementById("end-date").setAttribute("min", today);
+
+    const namaPerusahaanElem = document.getElementById('nama-perusahaan');
+    const xmlHttpRequestNamaPerusahaan = new XMLHttpRequest();
+    xmlHttpRequestNamaPerusahaan.onreadystatechange = function () {
+        if (xmlHttpRequestNamaPerusahaan.readyState === 4 && xmlHttpRequestNamaPerusahaan.status === 200) {
+            const responseText = xmlHttpRequestNamaPerusahaan.responseText
+            const json = JSON.parse(responseText)
+            document.getElementById('nomor-telepon').value = json['phone']
+            document.getElementById('email').value = json['email']
+            document.getElementById('nomor-telepon').readOnly = true
+            document.getElementById('email').readOnly = true
+        } else if (xmlHttpRequestNamaPerusahaan.status === 404) {
+            console.log('not found');
+            document.getElementById('nomor-telepon').value = ''
+            document.getElementById('email').value = ''
+            document.getElementById('nomor-telepon').readOnly = false
+            document.getElementById('email').readOnly = false
         }
-        today = yyyy+'-'+mm+'-'+dd;
-        document.getElementById("start-date").setAttribute("min", today);
-        document.getElementById("end-date").setAttribute("min", today);
+    }
+    namaPerusahaanElem.onchange = (ev) => {
+        if (namaPerusahaanElem.value !== '') {
+            xmlHttpRequestNamaPerusahaan.open('post', '/_/getcompanymp')
+            const formData = new FormData()
+            formData.append('orgname', namaPerusahaanElem.value)
+            xmlHttpRequestNamaPerusahaan.send(formData)
+        }
+    }
 </script>
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
