@@ -12,19 +12,14 @@ class GedungModel(Base):
     """
     Model class untuk tabel gedung
     """
-
     __tablename__ = 'gedung'
     id = Column(Integer, primary_key=True)
     nama = Column(String, unique=True, nullable=False)
-    image_path = Column(String)
-    deskripsi = Column(String, nullable=False)
     base_price = Column('base_price_in_hrs', Integer, nullable=False)
 
-    def __init__(self, id, nama, image_path, deskripsi, base_price, kapasitas, luas):
+    def __init__(self, id, nama, base_price):
         self.id = id
         self.nama = nama
-        self.image_path = image_path
-        self.deskripsi = deskripsi
         self.base_price = base_price
 
 
@@ -55,8 +50,6 @@ class GedungHelper:
         the_gedung: GedungModel = self.read_one(idGedung)
         with Session(self.engine) as session:
             the_gedung.nama = newGedung.nama
-            the_gedung.deskripsi = newGedung.deskripsi
-            the_gedung.image_path = newGedung.image_path
             the_gedung.base_price = newGedung.base_price
             session.add(the_gedung)
             session.commit()
