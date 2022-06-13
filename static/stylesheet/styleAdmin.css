@@ -1,0 +1,194 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+}
+
+header{
+    background: #012340;
+    border: 1px solid #012340 ;
+}
+
+hedaer .logo{
+    float: left;
+}
+
+header *{
+    color: aliceblue;
+
+}
+
+.index-wrapper{
+    height: 100%;
+    display: flex;
+}
+
+.row{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.row .col .card{  
+    top: 25%;
+    left: 10%;
+    box-shadow: 5px 10px #cbcaca;
+}
+
+
+.index-wrapper .leftside-wrapper{
+    flex:2;
+    height: 100%;
+    background: #012340;
+}
+
+.index-wrapper .leftside-wrapper ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.index-wrapper .leftside-wrapper ul li a{
+    padding: 0.5em;
+    display: block;
+    border-bottom: 1px solid #0259a0;
+    color: aliceblue;
+    text-decoration: none;
+    font-size: 2rem;
+  
+}
+.index-wrapper .leftside-wrapper ul li :hover{
+    background-color: #0259a0;
+    transition: all 0.3s;
+}
+
+.index-wrapper .rightside-content{
+    flex: 8;
+    height: 100%;
+    padding:40px 100px 100px;
+    overflow-y: scroll;
+}
+
+.index-wrapper .page-title{
+    text-align: center;
+    padding: 1rem;
+}
+
+table{
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+}
+
+.overlay-background{
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+}
+
+.overlay{
+    position: absolute;
+    display: none;
+    top: 10%;
+    left: 25%;
+    right: 25%;
+    background-color: rgba(255,255,255);
+    z-index: 2;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.overlay .overlay-content{
+    padding:10px 100px 100px;
+}
+
+.overlay .overlay-content .overlay-title{
+    text-align: center;
+    font-size: 40px;
+}
+
+.overlay .overlay-content button{
+    padding: 0.5em 1.1em;
+    font-size: 16pt;
+}
+
+.overlay form{
+    padding: 10px 10px; 
+    font-size: 1.5rem;
+}
+
+.overlay .btn-back{
+    margin: 20px;
+}
+
+
+/* Bordered form */
+form {
+    border: 3px solid #f1f1f1;
+  }
+  
+  /* Full-width inputs */
+  input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  
+  /* Add a hover effect for buttons */
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Extra style for the cancel button (red) */
+  .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+  }
+  
+  /* Center the avatar image inside this container */
+  .imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+  }
+  
+  /* Avatar image */
+  img.avatar {
+    width: 40%;
+    border-radius: 50%;
+  }
+  
+  /* Add padding to containers */
+  .container {
+    padding: 16px;
+  }
+  
+  /* The "Forgot password" text */
+  span.psw {
+    float: right;
+    padding-top: 16px;
+  }
+  
+  /* Change styles for span and cancel button on extra small screens */
+  @media screen and (max-width: 300px) {
+    span.psw {
+      display: block;
+      float: none;
+    }
+    .cancelbtn {
+      width: 100%;
+    }
+  }
