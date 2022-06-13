@@ -1,7 +1,7 @@
 import secrets
 import time
 
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, abort, jsonify
 from sqlalchemy import create_engine
 from flask_login import LoginManager
 
@@ -148,11 +148,11 @@ def booking_create():
     nama_organisasi = request.form['nama_organisasi']
     organisasi: OrganisasiModel = organisasi_helper.read_one_by_name(nama_organisasi)
     email = request.form['email']
+    nomor_telp = request.form['nomor_telepon']
     if organisasi is None:
         # Create new organization
         new_id = int(time.time())
-        # TODO: form nomor telepon belum ada
-        organisasi_helper.create(OrganisasiModel(new_id, nama_organisasi, email, '0'))
+        organisasi_helper.create(OrganisasiModel(new_id, nama_organisasi, email, nomor_telp))
         organisasi = organisasi_helper.read_one(new_id)
     start_date = request.form['start_date']
     end_date = request.form['end_date']
@@ -171,6 +171,17 @@ def booking_create():
 def about_view():
     return render_template('about.html')
 
+
+@app.route('/_/getcompanymp', methods=['post'])
+def get_company_mail_and_phone():
+    name = request.form['orgname']
+    organisasi: OrganisasiModel = organisasi_helper.read_one_by_name(name)
+    if organisasi is None:
+        abort(404)
+    org_email = organisasi.email
+    org_phone = organisasi.no_telp
+    jsonData = {'email': org_email, 'phone': org_phone}
+    return jsonify(jsonData)
 
 if __name__ == '__main__':
     app.run(debug=True)
