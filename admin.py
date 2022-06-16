@@ -51,7 +51,7 @@ class AdminHelper:
         :param newAdmin: admin baru yang diganti
         :return:
         """
-        the_admin: AdminModel = self.read_one_by_user(idAdmin)
+        the_admin: AdminModel = self.read_one(idAdmin)
         with Session(self.engine) as session:
             the_admin.username = newAdmin.username
             the_admin.password = newAdmin.password
