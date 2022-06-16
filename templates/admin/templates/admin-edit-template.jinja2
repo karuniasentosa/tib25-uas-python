@@ -1,0 +1,14 @@
+<button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
+<div class="overlay-content">
+    <h2 class="overlay-title">CREATE ADMIN</h2>
+    <!-- INPUT ADD BORROW -->
+    <div class="overlay-input">
+        <form action="{{ a }}" method="post">
+            <label for="username_create" class="form-label">USERNAME:</label><br>
+            <input type="text" id="username_create" name="username" value="{{ username }}" class="form-control"><br>
+            <label for="password_create" class="form-label">PASSWORD:</label><br>
+            <input type="password" id="password_create" name="password" value="{{ password }}" class="form-control"><br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

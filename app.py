@@ -168,11 +168,11 @@ def booking_create():
     nama_penanggungjawab = request.form['nama_penanggungjawab']
     nama_organisasi = request.form['nama_organisasi']
     organisasi: OrganisasiModel = organisasi_helper.read_one_by_name(nama_organisasi)
-    email = request.form['email']
-    nomor_telp = request.form['nomor_telepon']
     if organisasi is None:
         # Create new organization
         new_id = int(time.time())
+        email = request.form['email']
+        nomor_telp = request.form['nomor_telepon']
         organisasi_helper.create(OrganisasiModel(new_id, nama_organisasi, email, nomor_telp))
         organisasi = organisasi_helper.read_one(new_id)
     start_date = request.form['start_date']
