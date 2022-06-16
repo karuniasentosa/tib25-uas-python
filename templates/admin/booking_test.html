@@ -1,94 +1,46 @@
 {% extends 'admin/booking_template.jinja2' %}
 
-{% block rightside_wrapper%}
+{% block rightside_wrapper %}
     <button class="btn btn-primary" onclick="onAdd()">CREATE BOOKING</button>
     <div class="content">
         <h2 class="page-title">DATABASE BOOKING</h2>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
-                    <tr class="table-primary">
-                        <th class="text-center">BOOKING ID</th>
-                        <th class="text-center">ID GEDUNG</th>
-                        <th class="text-center">NAMA PENANGGUNG JAWAB</th>
-                        <th class="text-center">NAMA PENYEWA</th>
-                        <th class="text-center">START DATE</th>
-                        <th class="text-center">END DATE</th>
-                        <th class="text-center">START TIME</th>
-                        <th class="text-center">END TIME</th>
-                        <th colspan="2" class="text-center">Kontrol</th>
-                    </tr>
+                <tr class="table-primary">
+                    <th class="text-center">BOOKING ID</th>
+                    <th class="text-center">ID GEDUNG</th>
+                    <th class="text-center">NAMA PENANGGUNG JAWAB</th>
+                    <th class="text-center">NAMA PENYEWA</th>
+                    <th class="text-center">START DATE</th>
+                    <th class="text-center">END DATE</th>
+                    <th class="text-center">START TIME</th>
+                    <th class="text-center">END TIME</th>
+                    <th colspan="2" class="text-center">Kontrol</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% for booking in booking_list %}
+                {% for booking in booking_list %}
                     <tr>
                         <th class="text-center">{{ booking.id }}</th>
                         <td class="text-center">{{ booking.gedung_id }}</td>
                         <td class="text-center">{{ booking.nama_penanggungjawab }}</td>
                         <td class="text-center">{{ booking.penyewa }}</td>
-                        <td class="text-center">{{ booking.start_data }}</td>
+                        <td class="text-center">{{ booking.start_date }}</td>
                         <td class="text-center">{{ booking.end_date }}</td>
                         <td class="text-center">{{ booking.start_time }}</td>
                         <td class="text-center">{{ booking.end_time }}</td>
                         <!-- Tombol edit -->
                         <td class="text-center">
-                            <button onClick="onEdit('{{ booking.id }}')" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+                            <button onClick="onEdit('{{ booking.id }}')" class="btn btn-primary"><i
+                                    class="bi bi-pencil-fill"></i></button>
                         </td>
                         <!--Tombol hapus -->
                         <td class="text-center">
-                            <a href="{{ url_for('booking_delete', id_booking=booking.id) }}">
+                            <a href="{{ url_for('admin_booking_delete', id=booking.id) }}">
                                 <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
                             </a>
                         </td>
-                        <!--OVERLAY EDIT MEMBER-->
-                         <div id="overlay-background-edit" class="overlay-background" data-booking="{{ booking.id }}">
-                            <div id="overlay-edit" class="overlay" data-booking="{{ booking.id }}">
-                            <!-- BACK BOTTON -->
-                            <button class="btn btn-primary btn-back" onClick="offEdit('{{ booking.id }}')">Back</button>
-                                <div class="overlay-content">
-                                    <h2 class="overlay-title">EDIT GEDUNG</h2>
-                                    <!-- INPUT EDIT MEMBER -->
-                                    <div class="overlay-input">
-                                        <form action="{{ url_for('booking_update', id_booking=booking.id) }}" method="post">
-                                            <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
-                                            <input type="number" id="idbooking" name="id_booking" value="{{booking.id}}" class="form-control"><br>
-                                            <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
-                                            <input type="number" id="idgedung" name="id_gedung" value="{{booking.gedung_id}}" class="form-control"><br>
-                                            <label for="NamaPenanggungJawabEdit" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
-                                            <input type="text" id="namapenanggungjawabEdit" name="nama_penanggung_jawab" value="{{booking.nama_penanggungjawab}}" class="form-control"><br>
-                                            <label for="NamaPenyewa" class="form-label">NAMA PENYEWA:</label><br>
-                                            <label for="Email" class="form-label">Email:</label><br>
-                                            <input type="hidden" id="Email" name="Email" value="" class="form-control"><br>
-                                            <label for="NoTlp" class="form-label">NoTlp</label><br>
-                                            <input type="hidden" id="NoTlp" name="NoTlp" value="" class="form-control"><br>
-                                            <input type="text" id="NamaPenyewa" name="nama_penanggung_jawab" value="{{booking.penyewa}}" class="form-control"><br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="start-date-edit" class="form-label">MULAI TANGGAL</label>
-                                                    <input type="date" id="start-date-edit" class="form-control" placeholder="DD/MM/YYYY" value="{{booking.start_date}}" required>
-                                                </div>
-                                                <div class="col">
-                                                    <label for="end-date-edit" class="form-label">SAMPAI TANGGAL </label>
-                                                    <input type="date" id="end-date-edit" class="form-control" placeholder="DD/MM/YYYY" value="{{booking.end_date}}" required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="start-time-edit" class="form-label">JAM MULAI</label>
-                                                    <input type="time" id="start-time-edit" class="form-control" value="{{booking.start_time}}" required>
-                                                </div>
-                                                <div class="col">
-                                                    <label for="end-time-edit" class="form-label">JAM BERAKHIR</label>
-                                                    <input type="time" id="end-time-edit" class="form-control" value="{{booking.end_time}}" required>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                         </div>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -97,7 +49,7 @@
     </div>
 {% endblock %}
 
-{% block leftside_wrapper%}
+{% block leftside_wrapper %}
     <ul>
         <li><a href="booking.html">BOOKING</a></li>
         <li><a href="gedung.html">GEDUNG</a></li>
@@ -107,48 +59,56 @@
     </ul>
 {% endblock %}
 
-{% block overlay_add%}
+{% block overlay_edit %}
+<div id="overlay-edit-placeholder"></div>
+{% endblock %}
+
+{% block overlay_add %}
     <button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
-        <div class="overlay-content">
-            <h2 class="overlay-title">CREATE GEDUNG</h2>
-            <!-- INPUT ADD MEMBER -->
-            <div class="overlay-input">
-                <form action="{{ url_for('booking_create')}}" method="post">
-                    <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
-                    <input type="number" id="id_booking" name="id_booking" value="" class="form-control"><br>
-                    <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
-                    <input type="number" id="id_gedung" name="gedung_id" value="" class="form-control"><br>
-                    <label for="Nama-Penanggung-Jawab-Add" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
-                    <input type="text" id="Nama-Penanggung-Jawab-Add" name="nama_penanggungjawab" value="" class="form-control"><br>
-                    <label for="Nama-organisasi-Add" class="form-label">NAMA PENYEWA:</label><br>
-                    <input type="text" id="Nama-organisasi-Add" name="nama_organisasi" value="" class="form-control"><br>
-                    <label for="Email-Add" class="form-label">EMAIL:</label><br>
-                    <input type="email" id="Email-Add" name="email" value="" class="form-control">
-                    <label for="NoTlp-Add" class="form-label">NO TELEPON:</label><br>
-                    <input type="text" id="NoTlp-Add" name="nomor_telepon" value="" class="form-control"><br>
-                    <div class="row" style="">
-                            <div class="col">
-                                <label for="start-date" class="form-label">MULAI TANGGAL</label>
-                                <input type="date" id="start-date" name="start_date" class="form-control" placeholder="DD/MM/YYYY" required>
-                            </div>
-                            <div class="col">
-                                <label for="end-date" class="form-label">SAMPAI TANGGAL </label>
-                                <input type="date" id="end-date" name="end_date" class="form-control" placeholder="DD/MM/YYYY" required>
-                            </div>
-                    </div><br>
-                    <div class="row">
-                            <div class="col">
-                                <label for="start-time" class="form-label">JAM MULAI</label>
-                                <input type="time" id="start-time" name="start_time" class="form-control" required>
-                            </div>
-                            <div class="col">
-                                <label for="end-time" class="form-label">JAM BERAKHIR</label>
-                                <input type="time" id="end-time" name="end_time" class="form-control" required>
-                            </div>
-                        </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+    <div class="overlay-content">
+        <h2 class="overlay-title">CREATE GEDUNG</h2>
+        <!-- INPUT ADD MEMBER -->
+        <div class="overlay-input">
+            <form action="{{ url_for('booking_create') }}" method="post">
+                <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
+                <input type="number" id="id_booking" name="id_booking" value="" class="form-control"><br>
+                <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
+                <input type="number" id="id_gedung" name="gedung_id" value="" class="form-control"><br>
+                <label for="Nama-Penanggung-Jawab-Add" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
+                <input type="text" id="Nama-Penanggung-Jawab-Add" name="nama_penanggungjawab" value=""
+                       class="form-control"><br>
+                <label for="Nama-organisasi-Add" class="form-label">NAMA PENYEWA:</label><br>
+                <input type="text" id="Nama-organisasi-Add" name="nama_organisasi" value="" class="form-control"><br>
+                <label for="Email-Add" class="form-label">EMAIL:</label><br>
+                <input type="email" id="Email-Add" name="email" value="" class="form-control">
+                <label for="NoTlp-Add" class="form-label">NO TELEPON:</label><br>
+                <input type="text" id="NoTlp-Add" name="nomor_telepon" value="" class="form-control"><br>
+                <div class="row" style="">
+                    <div class="col">
+                        <label for="start-date" class="form-label">MULAI TANGGAL</label>
+                        <input type="date" id="start-date" name="start_date" class="form-control"
+                               placeholder="DD/MM/YYYY" required>
+                    </div>
+                    <div class="col">
+                        <label for="end-date" class="form-label">SAMPAI TANGGAL </label>
+                        <input type="date" id="end-date" name="end_date" class="form-control" placeholder="DD/MM/YYYY"
+                               required>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <label for="start-time" class="form-label">JAM MULAI</label>
+                        <input type="time" id="start-time" name="start_time" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label for="end-time" class="form-label">JAM BERAKHIR</label>
+                        <input type="time" id="end-time" name="end_time" class="form-control" required>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
+    </div>
 {% endblock %}

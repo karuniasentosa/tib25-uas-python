@@ -19,47 +19,63 @@
     </div>
 </header>
 <div class="index-wrapper">
-    {% block index_wrapper%} {% endblock %}
+    {% block index_wrapper %} {% endblock %}
     <!-- LEFT SIDE -->
     <div class="leftside-wrapper">
-        {% block leftside_wrapper%} {% endblock %}
+        {% block leftside_wrapper %} {% endblock %}
     </div>
     <!-- RIGHT CONTENT -->
     <div class="rightside-content">
-        {% block rightside_wrapper%} {% endblock %}
+        {% block rightside_wrapper %} {% endblock %}
     </div>
+</div>
+<div id="overlay-background-add" class="overlay-background">
+    <div id="overlay-add" class="overlay">
+        {% block overlay_add %} {% endblock %}
     </div>
-    <div id="overlay-background-add" class="overlay-background">
-        <div id="overlay-add" class="overlay">
-            {% block overlay_add%} {% endblock %}
-        </div>
-    </div>
+</div>
+
+{% block overlay_edit %} {% endblock %}
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script>
+    function onAdd() {
+        document.getElementById("overlay-add").style.display = "block";
+        document.getElementById("overlay-background-add").style.display = "block";
+    }
 
- <script>
-        function onAdd() {
-          document.getElementById("overlay-add").style.display = "block";
-          document.getElementById("overlay-background-add").style.display = "block";
-        }
+    function offAdd() {
+        document.getElementById("overlay-add").style.display = "none";
+        document.getElementById("overlay-background-add").style.display = "none";
+    }
 
-        function offAdd() {
-          document.getElementById("overlay-add").style.display = "none";
-          document.getElementById("overlay-background-add").style.display = "none";
+    function onEdit(whichId) {
+        let xmlHttpRequest = new XMLHttpRequest();
+        let formData = new FormData();
+        formData.append('id', whichId)
+        xmlHttpRequest.open('post', '/_/templates/admin_edit')
+        xmlHttpRequest.onreadystatechange = function () {
+            'use strict';
+            if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
+                const response = xmlHttpRequest.responseText;
+                console.log(response)
+                const placeholder = document.getElementById('overlay-edit-placeholder');
+                placeholder.innerHTML = response
+                document.querySelector(`#overlay-background-edit[data-booking="${whichId}"]`).style.display = "block"
+                document.querySelector(`#overlay-edit[data-booking="${whichId}"]`).style.display = "block";
+            } else if (xmlHttpRequest.status !== 200) {
+                console.error(`xmlHttpRequest status `, xmlHttpRequest.status)
+            }
         }
+        xmlHttpRequest.send(formData)
+    }
 
-        function onEdit() {
-          document.getElementById("overlay-edit").style.display = "block";
-          document.getElementById("overlay-background-edit").style.display = "block";
-        }
-
-        function offEdit() {
-          document.getElementById("overlay-edit").style.display = "none";
-          document.getElementById("overlay-background-edit").style.display = "none";
-        }
- </script>
+    function offEdit(whichId) {
+        document.querySelector(`#overlay-background-edit[data-booking="${whichId}"]`).remove();
+    }
+</script>
 </body>
 </html>
