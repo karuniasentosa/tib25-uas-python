@@ -40,11 +40,8 @@ class AuthMan:
 
     @staticmethod
     def register(engine: Engine, username, password):
-        new_admin: AdminModel = AdminModel()
-        new_admin.id = (time.time()*100)
-        new_admin.username = username
-        new_admin.password = generate_password_hash(password)
-        with AdminHelper(engine) as helper:
-            helper.create(new_admin)
+        new_admin: AdminModel = AdminModel(int(time.time()*100), username, generate_password_hash(password))
+        admin_helper = AdminHelper(engine)
+        admin_helper.create(new_admin)
 
 
