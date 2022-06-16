@@ -85,7 +85,7 @@ def admin_users_update(id):
 @login_required
 def admin_booking_view():
     booking_list = booking_helper.read()
-    return render_template('admin/booking_test.html', booking_list = booking_list)
+    return render_template('admin/booking_test.html', booking_list=booking_list)
 
 
 @app.route('/admin/booking/create', methods=['POST'])
@@ -104,6 +104,7 @@ def admin_booking_create():
 
 
 @app.route('/admin/booking/edit/<id>', methods=['post'])
+@login_required
 def admin_booking_edit(id):
     the_booking: BookingModel = booking_helper.read_one(id)
     the_booking.gedung_id = request.form['gedung_id']
@@ -111,6 +112,13 @@ def admin_booking_edit(id):
     the_booking.end_datetime = request.form['end_datetime']
     booking_helper.update(id, the_booking)
 
+    return redirect(url_for('admin_booking_view'))
+
+
+@app.route('/admin/booking/delete/<id>', methods=['post'])
+@login_required
+def admin_booking_delete(id):
+    booking_helper.delete(id)
     return redirect(url_for('admin_booking_view'))
 
 
