@@ -229,5 +229,18 @@ def calculate_booking_price():
     return str(price)
 
 
+@app.route('/_/templates/admin/edit', methods=['post'])
+def templates_admin_edit():
+    pass
+
+
+@app.route('/_/templates/admin_edit', methods=['post'])
+@login_required
+def templates_booking_edit():
+    id = request.form['id']
+    the_booking = booking_helper.read_one(id)
+    return render_template('admin/component/booking_edit_overlay.jinja2', booking=the_booking)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
