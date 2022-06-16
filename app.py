@@ -153,7 +153,7 @@ def load_user(id):
 
 @app.route('/')
 def index_view():
-    return render_template('admin/organisasi_test.html')
+    return render_template('admin/gedung_test.html')
 
 
 @app.route('/booking')
