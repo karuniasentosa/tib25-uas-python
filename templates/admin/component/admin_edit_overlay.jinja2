@@ -1,0 +1,21 @@
+<div class="overlay-background" id="overlay-background-edit" data-admin="{{ admin.id }}">
+    <div id="overlay-edit" class="overlay" data-admin="{{ admin.id }}">
+        <!-- BACK BOTTON -->
+        <button class="btn btn-primary btn-back" onClick="offEdit('{{ admin.id }}')">Back</button>
+        <div class="overlay-content">
+            <h2 class="overlay-title">EDIT ADMIN </h2>
+            <!-- INPUT EDIT BORROW -->
+            <div class="overlay-input">
+                <form action="{{ url_for('admin_users_update', id=admin.id) }}" method="post">
+                    <label for="username_edit" class="form-label">USERNAME:</label><br>
+                    <input type="text" id="username_edit" name="username" value="{{ admin.username }}" class="form-control" readonly><br>
+                    <label for="old_password_edit" class="form-label">OLD PASSWORD:</label><br>
+                    <input type="password" id="old_password_edit" name="old_password" value="" class="form-control"><br>
+                    <label for="new_password_edit" class="form-label">NEW PASSWORD:</label><br>
+                    <input type="password" id="new_password_edit" name="new_password" value="" class="form-control"><br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
