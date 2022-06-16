@@ -125,9 +125,8 @@ def admin_organisasi_view():
 @app.route('/admin/gedung')
 @login_required
 def admin_gedung_view():
-    """
-    Halaman admin bagian gedung
-    """
+    gedungs = gedung_helper.read()
+    return render_template('admin/gedung.html', gedungs=gedungs)
     pass
 
 
