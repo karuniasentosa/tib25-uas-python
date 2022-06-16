@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/styleAdmin.css') }}">
 
-    <title>GEDUNG</title>
+    <title>BOOKING</title>
   </head>
   <body>
     <header>
@@ -28,35 +28,40 @@
                 <li><a href="gedung.html">GEDUNG</a></li>
                 <li><a href="admin.html">ADMIN</a></li>
                 <li><a href="organisasi.html">ORGANISASI</a></li>
-                <li><a href="index.html">LOG OUT</a></li>
             </ul>
         </div>
         <!-- RIGHT CONTENT -->
         <div class="rightside-content">
             <!-- button -->
-            <button class="btn btn-primary" onclick="onAdd()">CREATE GEDUNG</button>
+            <button class="btn btn-primary" onclick="onAdd()">CREATE BOOKING</button>
 
             <div class="content">
-                <h2 class="page-title">DATABASE GEDUNG</h2>
+                <h2 class="page-title">DATABASE BOOKING</h2>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr class="table-primary">
+                                <th class="text-center">BOOKING ID</th>
                                 <th class="text-center">ID GEDUNG</th>
-                                <th class="text-center">NAMA GEDUNG</th>
-                                <th class="text-center">IMAGE</th>
-                                <th class="text-center">DESKRIPSI</th>
-                                <th class="text-center">BASE PRICE</th>
+                                <th class="text-center">NAMA PENANGGUNG JAWAB</th>
+                                <th class="text-center">NAMA PENYEWA</th>
+                                <th class="text-center">START DATE</th>
+                                <th class="text-center">END DATE</th>
+                                <th class="text-center">START TIME</th>
+                                <th class="text-center">END TIME</th>
                                 <th colspan="2" class="text-center">Kontrol</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th class="text-center">1002</th>
-                                <td class="text-center">GEDUNG QUERTA</td>
-                                <td class="text-center">INI GAMBAR</td>
-                                <td class="text-center">DESKRIPSI</td>
-                                <td class="text-center">Rp. 100.000</td>
+                                <th class="text-center">1120</th>
+                                <td class="text-center">001</td>
+                                <td class="text-center">SURYONO</td>
+                                <td class="text-center">SUPADI</td>
+                                <td class="text-center">12 DESEMBER 2022</td>
+                                <td class="text-center">14 DESEMBER 2022</td>
+                                <td class="text-center">08.00</td>
+                                <td class="text-center">12.00</td>
 
                                 <!-- Tombol edit -->
                                 <td class="text-center">
@@ -76,17 +81,24 @@
                                     <h2 class="overlay-title">EDIT GEDUNG</h2>
                                     <!-- INPUT EDIT MEMBER -->
                                     <div class="overlay-input">
-                                        <form action="/">
+                                        <form action="/static">
+                                            <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
+                                            <input type="number" id="id_booking" name="id_booking" value=""class="form-control"><br>
                                             <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
                                             <input type="number" id="id_gedung" name="id_gedung" value=""class="form-control"><br>
-                                            <label for="NamaGedung" class="form-label">NAMA GEDUNG:</label><br>
-                                            <input type="text" id="Nama" name="Nama" value=""class="form-control"><br>
-                                            <label for="img">Select image:</label>
-                                            <input type="file" id="img" name="img" accept="image/*">
-                                            <label for="Deskripsi" class="form-label">DESKRIPSI:</label><br>
-                                            <input type="text" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
-                                            <label for="BasePrice" class="form-label">BASE PRICE:</label><br>
-                                            <input type="int" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
+                                            <label for="NamaPenanggungJawab" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
+                                            <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                                            <label for="NamaPenanggungJawab" class="form-label">NAMA PENYEWA:</label><br>
+                                            <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                                            <label for="StartDate">START DATE:</label>
+                                            <input type="date" id="start_date" name="start_date">
+                                            <label for="EndDate">END DATE:</label>
+                                            <input type="date" id="end_date" name="end_date">
+                                            <label for="StartTime">START TIME:</label>
+                                            <input type="time" id="start_time" name="start_time">
+                                            <label for="EndTime">END TIME:</label>
+                                            <input type="time" id="end_time" name="end_time">
+                                            <input type="text" class="form-control" onkeydown="javascript: return isNumberInput(event);"/><br>
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
                                     </div>
@@ -106,17 +118,24 @@
             <h2 class="overlay-title">CREATE GEDUNG</h2>
             <!-- INPUT ADD MEMBER -->
             <div class="overlay-input">
-                <form action="/">
+                <form action="/static">
+                    <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
+                    <input type="number" id="id_booking" name="id_booking" value=""class="form-control"><br>
                     <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
                     <input type="number" id="id_gedung" name="id_gedung" value=""class="form-control"><br>
-                    <label for="NamaGedung" class="form-label">NAMA GEDUNG:</label><br>
-                    <input type="text" id="Nama" name="Nama" value=""class="form-control"><br>
-                    <label for="img">Select image:</label>
-                    <input type="file" id="img" name="img" accept="image/*">
-                    <label for="Deskripsi" class="form-label">DESKRIPSI:</label><br>
-                    <input type="text" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
-                    <label for="BasePrice" class="form-label">BASE PRICE:</label><br>
-                    <input type="int" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
+                    <label for="NamaPenanggungJawab" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
+                    <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                    <label for="NamaPenanggungJawab" class="form-label">NAMA PENYEWA:</label><br>
+                    <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                    <label for="StartDate">START DATE:</label>
+                    <input type="date" id="start_date" name="start_date">
+                    <label for="EndDate">END DATE:</label>
+                    <input type="date" id="end_date" name="end_date">
+                    <label for="StartTime">START TIME:</label>
+                    <input type="time" id="start_time" name="start_time">
+                    <label for="EndTime">END TIME:</label>
+                    <input type="time" id="end_time" name="end_time">
+                    <input type="text" class="form-control" onkeydown="javascript: return isNumberInput(event);"/><br>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

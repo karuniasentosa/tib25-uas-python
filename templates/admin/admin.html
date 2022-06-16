@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/styleAdmin.css') }}">
+
+    <title>ADMIN</title>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1 class="logo-wa">KELOMPOK 2</h1>
+    </div>
+</header>
+<!-- INDEX WRAPPER -->
+<div class="index-wrapper">
+    <!-- LEFT SIDE -->
+    <div class="leftside-wrapper">
+        <ul>
+            <li><a href="booking.html">BOOKING</a></li>
+            <li><a href="gedung.html">GEDUNG</a></li>
+            <li><a href="admin.html">ADMIN</a></li>
+            <li><a href="organisasi.html">ORGANISASI</a></li>
+            <li><a href="../index.html">LOG OUT</a></li>
+        </ul>
+    </div>
+    <!-- RIGHT CONTENT -->
+    <div class="rightside-content">
+        <!-- button -->
+        <button class="btn btn-primary" onclick="onAdd()">CREATE ADMIN</button>
+
+        <div class="content">
+            <h2 class="page-title">DATABASE ADMIN</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="table-primary">
+                        <th class="text-center">ID ADMIN</th>
+                        <th class="text-center">USERNAME</th>
+                        <th colspan="2" class="text-center">Kontrol</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        {% for user in users %}
+                            <th class="text-center">{{ user.id }}</th>
+                            <td class="text-center">{{ user.username }}</td>
+                            <!-- Tombol edit -->
+                            <td class="text-center">
+                                <button onClick="onEdit()" class="btn btn-primary">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                            </td>
+
+                            <!--Tombol hapus -->
+                            <td class="text-center">
+                                <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--OVERLAY ADD BORROW -->
+    <div id="overlay-add" class="overlay">
+        <!-- BACK BOTTON -->
+        <button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
+        <div class="overlay-content">
+            <h2 class="overlay-title">CREATE ADMIN</h2>
+            <!-- INPUT ADD BORROW -->
+            <div class="overlay-input">
+                <form action="{{ url_for('admin_users_create') }}" method="post">
+                    <label for="username_create" class="form-label">USERNAME:</label><br>
+                    <input type="text" id="username_create" name="username" value="" class="form-control"><br>
+                    <label for="password_create" class="form-label">PASSWORD:</label><br>
+                    <input type="password" id="password_create" name="password" value="" class="form-control"><br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--OVERLAY EDIT BORROW-->
+    <div id="overlay-edit" class="overlay">
+        <!-- BACK BOTTON -->
+        <button class="btn btn-primary btn-back" onClick="offEdit()">Back</button>
+        <div class="overlay-content">
+            <h2 class="overlay-title">EDIT ADMIN </h2>
+            <!-- INPUT EDIT BORROW -->
+            <div class="overlay-input">
+                <form action="{{ url_for('admin_users_update', id='a') }}" method="post">
+                    <label for="id_admin_edit" class="form-label">ID ADMIN:</label><br>
+                    <input type="number" id="id_admin_edit" name="id_admin" value="" class="form-control"><br>
+                    <label for="username_edit" class="form-label">USERNAME:</label><br>
+                    <input type="text" id="username_edit" name="username" value="" class="form-control"><br>
+                    <label for="old_password_edit" class="form-label">OLD PASSWORD:</label><br>
+                    <input type="password" id="old_password_edit" name="old_password" value="" class="form-control"><br>
+                    <label for="new_password_edit" class="form-label">NEW PASSWORD:</label><br>
+                    <input type="password" id="new_password_edit" name="new_password" value="" class="form-control"><br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="jumbotron">
+    <h1 align="center" class="judul">PERPUSTAKAAN UBM</h1>
+</div>
+</div> -->
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+-->
+<!--script for open and close overlay  -->
+<script>
+    function onAdd() {
+        document.getElementById("overlay-add").style.display = "block";
+    }
+
+    function offAdd() {
+        document.getElementById("overlay-add").style.display = "none";
+    }
+
+    function onEdit() {
+        document.getElementById("overlay-edit").style.display = "block";
+    }
+
+    function offEdit() {
+        document.getElementById("overlay-edit").style.display = "none";
+    }
+</script>
+</body>
+</html>

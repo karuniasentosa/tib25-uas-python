@@ -13,13 +13,13 @@
     <title>LOG IN</title>
   </head>
   <body>
-    <form action="booking.html" method="post">
+    <form action="{{ url_for('admin_login_view') }}" method="post">
         <div class="container">
           <label for="uname"><b>Username</b></label>
-          <input type="text" placeholder="Enter Username" name="uname" required>
+          <input type="text" id="uname" placeholder="Enter Username" name="uname" required>
       
           <label for="psw"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required>
+          <input type="password" id="psw" placeholder="Enter Password" name="psw" required>
       
           <button type="submit" class="btn btn-success">Login</button>
           <label>

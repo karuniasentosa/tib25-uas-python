@@ -87,7 +87,7 @@ class AdminHelper:
         """
         with Session(self.engine) as session:
             stmt = select(AdminModel).where(AdminModel.username == username)
-            return session.scalars(stmt).one()
+            return session.scalars(stmt).one_or_none()
 
     def read_one(self, id):
         """

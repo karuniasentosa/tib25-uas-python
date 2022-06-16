@@ -1,4 +1,4 @@
-            <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/styleAdmin.css') }}">
 
-    <title>ADMIN</title>
+    <title>GEDUNG</title>
   </head>
   <body>
     <header>
@@ -28,31 +28,36 @@
                 <li><a href="gedung.html">GEDUNG</a></li>
                 <li><a href="admin.html">ADMIN</a></li>
                 <li><a href="organisasi.html">ORGANISASI</a></li>
-                <li><a href="index.html">LOG OUT</a></li>
+                <li><a href="../index.html">LOG OUT</a></li>
             </ul>
         </div>
         <!-- RIGHT CONTENT -->
         <div class="rightside-content">
             <!-- button -->
-            <button class="btn btn-primary" onclick="onAdd()">CREATE ADMIN</button>
+            <button class="btn btn-primary" onclick="onAdd()">CREATE GEDUNG</button>
 
             <div class="content">
-                <h2 class="page-title">DATABASE ADMIN</h2>
+                <h2 class="page-title">DATABASE GEDUNG</h2>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr class="table-primary">
-                                <th class="text-center">ID ADMIN</th>
-                                <th class="text-center">USERNAME</th>
-                                <th class="text-center">PASSWORD</th>
+                                <th class="text-center">ID GEDUNG</th>
+                                <th class="text-center">NAMA GEDUNG</th>
+                                <th class="text-center">IMAGE</th>
+                                <th class="text-center">DESKRIPSI</th>
+                                <th class="text-center">BASE PRICE</th>
                                 <th colspan="2" class="text-center">Kontrol</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th class="text-center">1110</th>
-                                <td class="text-center">adlv1110</td>
-                                <td class="text-center">********</td>
+                                <th class="text-center">1002</th>
+                                <td class="text-center">GEDUNG QUERTA</td>
+                                <td class="text-center">INI GAMBAR</td>
+                                <td class="text-center">DESKRIPSI</td>
+                                <td class="text-center">Rp. 100.000</td>
+
                                 <!-- Tombol edit -->
                                 <td class="text-center">
                                     <button onClick="onEdit()" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
@@ -63,46 +68,55 @@
                                     <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
                                 </td>
                             </tr>
+                                <!--OVERLAY EDIT MEMBER-->
+                            <div id="overlay-edit" class="overlay">
+                                <!-- BACK BOTTON -->
+                                <button class="btn btn-primary btn-back" onClick="offEdit()">Back</button>
+                                <div class="overlay-content">
+                                    <h2 class="overlay-title">EDIT GEDUNG</h2>
+                                    <!-- INPUT EDIT MEMBER -->
+                                    <div class="overlay-input">
+                                        <form action="/static">
+                                            <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
+                                            <input type="number" id="id_gedung" name="id_gedung" value=""class="form-control"><br>
+                                            <label for="NamaGedung" class="form-label">NAMA GEDUNG:</label><br>
+                                            <input type="text" id="Nama" name="Nama" value=""class="form-control"><br>
+                                            <label for="img">Select image:</label>
+                                            <input type="file" id="img" name="img" accept="image/*">
+                                            <label for="Deskripsi" class="form-label">DESKRIPSI:</label><br>
+                                            <input type="text" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
+                                            <label for="BasePrice" class="form-label">BASE PRICE:</label><br>
+                                            <input type="int" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    <!--OVERLAY ADD BORROW -->
+    </div>
+    <!--OVERLAY ADD MEMBER -->
     <div id="overlay-add" class="overlay">
         <!-- BACK BOTTON -->
         <button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
         <div class="overlay-content">
-            <h2 class="overlay-title">CREATE ADMIN</h2>
-            <!-- INPUT ADD BORROW -->
+            <h2 class="overlay-title">CREATE GEDUNG</h2>
+            <!-- INPUT ADD MEMBER -->
             <div class="overlay-input">
-                <form action="/">
-                    <label for="IdAdmin" class="form-label">ID ADMIN:</label><br>
-                    <input type="number" id="id_admin" name="id_admin" value=""class="form-control"><br>
-                    <label for="Username" class="form-label">USERNAME:</label><br>
-                    <input type="text" id="username" name="username" value="" class="form-control"><br>
-                    <label for="Password" class="form-label">PASSWORD:</label><br>
-                    <input type="password" id="password" name="password" value="" class="form-control"><br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!--OVERLAY EDIT BORROW-->
-    <div id="overlay-edit" class="overlay">
-        <!-- BACK BOTTON -->
-        <button class="btn btn-primary btn-back" onClick="offEdit()">Back</button>
-        <div class="overlay-content">
-            <h2 class="overlay-title">EDIT ADMIN </h2>
-            <!-- INPUT EDIT BORROW -->
-            <div class="overlay-input">
-                <form action="/">
-                    <label for="IdAdmin" class="form-label">ID ADMIN:</label><br>
-                    <input type="number" id="id_admin" name="id_admin" value=""class="form-control"><br>
-                    <label for="Username" class="form-label">USERNAME:</label><br>
-                    <input type="text" id="username" name="username" value="" class="form-control"><br>
-                    <label for="Password" class="form-label">PASSWORD:</label><br>
-                    <input type="password" id="password" name="password" value="" class="form-control"><br>
+                <form action="/static">
+                    <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
+                    <input type="number" id="id_gedung" name="id_gedung" value=""class="form-control"><br>
+                    <label for="NamaGedung" class="form-label">NAMA GEDUNG:</label><br>
+                    <input type="text" id="Nama" name="Nama" value=""class="form-control"><br>
+                    <label for="img">Select image:</label>
+                    <input type="file" id="img" name="img" accept="image/*">
+                    <label for="Deskripsi" class="form-label">DESKRIPSI:</label><br>
+                    <input type="text" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
+                    <label for="BasePrice" class="form-label">BASE PRICE:</label><br>
+                    <input type="int" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

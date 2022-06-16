@@ -19,8 +19,8 @@ class AuthMan:
     def login(engine: Engine, username, password):
         the_admin: AdminModel  # buat variabel terlebih dahulu
 
-        with AdminHelper(engine) as helper:
-            the_admin = helper.read_one_by_user(username)  # minta cari admin berdasarkan username
+        admin_helper = AdminHelper(engine)
+        the_admin = admin_helper.read_one_by_user(username)  # minta cari admin berdasarkan username
 
         if the_admin is None:  # langsung return False jika tidak ditemukan
             return False

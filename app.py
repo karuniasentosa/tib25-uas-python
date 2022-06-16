@@ -31,44 +31,60 @@ gedung_helper = GedungHelper(engine)
 
 
 # login view
-@app.route('/admin-login')
+@app.route('/admin', methods=['GET', 'POST'])
 def admin_login_view():
-    pass
+    if request.method == 'GET':
+        if current_user.is_authenticated:
+            return redirect(url_for('admin_users_view'))
+        return render_template('admin/login.html')
+    if request.method == 'POST':
+        username = request.form['uname']
+        password = request.form['psw']
+        can_login = AuthMan.login(engine, username, password)
+        if can_login:
+            return redirect(url_for('admin_users_view'))
+        else:
+            return abort(401)
 
 
-@app.route('/admin')
-@login_required
-def admin_view():
-    """
-    Halaman admin (dashboard)
-    """
-    pass
-
-
-@app.route('/admin/users')
+@app.route('/admin/admin')
 @login_required
 def admin_users_view():
-    """
-    Halaman admin bagian user
-    """
+    admins = admin_helper.read()
+    return render_template('admin/admin_test.html', users=admins)
     pass
 
 
-@app.route('/admin/users/create', methods=["POST"])
+@app.route('/admin/admin/create', methods=["POST"])
 @login_required
 def admin_users_create():
     username = request.form['username']
     password = request.form['password']
     AuthMan.register(engine, username, password)
-    pass
+    return redirect(url_for('admin_users_view'))
+
+
+@app.route('/admin/admin/update/<id>', methods=['post'])
+@login_required
+def admin_users_update(id):
+    username = request.form['username']
+    old_password = request.form['old_password']
+    new_password = request.form['new_password']
+    the_admin: AdminModel = admin_helper.read_one(id)
+    password_matches = check_password_hash(the_admin.password, old_password)
+    if not password_matches:
+        abort(401)
+        return
+    new_password_hash = generate_password_hash(new_password)
+    new_admin = AdminModel(id, username, new_password_hash)
+    admin_helper.update(id, new_admin)
+    return redirect(url_for('admin_users_view'))
 
 
 @app.route('/admin/booking')
 @login_required
 def admin_booking_view():
-    """
-    Halaman admin bagian booking
-    """
+    return render_template('admin/booking.html')
     pass
 
 
@@ -101,9 +117,8 @@ def admin_booking_edit(id):
 @app.route('/admin/organisasi')
 @login_required
 def admin_organisasi_view():
-    """
-    Halaman admin bagian organisasi
-    """
+    orgs = organisasi_helper.read()
+    return render_template('admin/organisasi.html', orgs=orgs)
     pass
 
 
@@ -114,6 +129,13 @@ def admin_gedung_view():
     Halaman admin bagian gedung
     """
     pass
+
+
+@app.route('/admin/logout')
+@login_required
+def admin_logout():
+    AuthMan.logout()
+    return redirect(url_for('index_view'))
 
 
 @login_manager.user_loader
@@ -139,7 +161,7 @@ def index_view():
 def booking_view():
     orgs = organisasi_helper.read()
     gedungs = gedung_helper.read()
-    return render_template('form_booking.html', orgs=orgs, gedungs=gedungs)
+    return render_template('user/form_booking.html', orgs=orgs, gedungs=gedungs)
 
 
 @app.route('/booking/create', methods=['post'])
@@ -169,7 +191,7 @@ def booking_create():
 
 @app.route('/about')
 def about_view():
-    return render_template('about.html')
+    return render_template('user/about.html')
 
 
 @app.route('/_/getcompanymp', methods=['post'])

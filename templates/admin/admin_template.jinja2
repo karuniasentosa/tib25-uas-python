@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/styleAdmin.css') }}">
+
+    <title>ADMIN</title>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1 class="logo-wa">KELOMPOK 2</h1>
+    </div>
+</header>
+<div class="index-wrapper">
+    <div class="leftside-wrapper">
+        <ul>
+            <li><a href="{{ url_for('admin_booking_view') }}">BOOKING</a></li>
+            <li><a href="{{ url_for('admin_gedung_view') }}">GEDUNG</a></li>
+            <li><a href="{{ url_for('admin_users_view') }}">ADMIN</a></li>
+            <li><a href="{{ url_for('admin_organisasi_view') }}">ORGANISASI</a></li>
+            <li><a href="{{ url_for('admin_logout') }}">LOG OUT</a></li>
+        </ul>
+    </div>
+    <div class="rightside-content">
+        {% block rightside_content %} {% endblock %}
+    </div>
+    <div id='overlay-add' class="overlay">
+        {% block overlay_add %} {% endblock %}
+    </div>
+    <div id="overlay-edit" class="overlay">
+        {% block overlay_edit %} {% endblock %}
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+<script>
+    function onAdd() {
+        document.getElementById("overlay-add").style.display = "block";
+    }
+
+    function offAdd() {
+        document.getElementById("overlay-add").style.display = "none";
+    }
+
+    function onEdit() {
+        document.getElementById("overlay-edit").style.display = "block";
+    }
+
+    function offEdit() {
+        document.getElementById("overlay-edit").style.display = "none";
+    }
+</script>
+</body>
+</html>
