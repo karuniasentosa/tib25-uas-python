@@ -84,8 +84,8 @@ def admin_users_update(id):
 @app.route('/admin/booking')
 @login_required
 def admin_booking_view():
-    return render_template('admin/booking.html')
-    pass
+    booking_list = booking_helper.read()
+    return render_template('admin/booking_test.html', booking_list = booking_list)
 
 
 @app.route('/admin/booking/create', methods=['POST'])
@@ -153,7 +153,7 @@ def load_user(id):
 
 @app.route('/')
 def index_view():
-    return render_template('admin/gedung_test.html')
+    return render_template('admin/booking_test.html')
 
 
 @app.route('/booking')

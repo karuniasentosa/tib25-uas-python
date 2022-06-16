@@ -55,24 +55,26 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th class="text-center">1120</th>
-                                <td class="text-center">001</td>
-                                <td class="text-center">SURYONO</td>
-                                <td class="text-center">SUPADI</td>
-                                <td class="text-center">12 DESEMBER 2022</td>
-                                <td class="text-center">14 DESEMBER 2022</td>
-                                <td class="text-center">08.00</td>
-                                <td class="text-center">12.00</td>
+                                {% for booking in booking_list %}
+                                    <th class="text-center">{% booking.id %}</th>
+                                    <td class="text-center">{% booking.gedung_id %}</td>
+                                    <td class="text-center">{% booking.nama_penanggungjawab %}</td>
+                                    <td class="text-center">{% booking.penyewa %}</td>
+                                    <td class="text-center">{% booking.start_data %}</td>
+                                    <td class="text-center">{% booking.end_date %}</td>
+                                    <td class="text-center">{% booking.start_time %}</td>
+                                    <td class="text-center">{% booking.end_time %}</td>
 
-                                <!-- Tombol edit -->
-                                <td class="text-center">
-                                    <button onClick="onEdit()" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-                                </td>
+                                    <!-- Tombol edit -->
+                                    <td class="text-center">
+                                        <button onClick="onEdit()" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+                                    </td>
 
-                                <!--Tombol hapus -->
-                                <td class="text-center">
-                                    <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-                                </td>
+                                    <!--Tombol hapus -->
+                                    <td class="text-center">
+                                        <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                                    </td>
+                                {% endfor %}
                             </tr>
                                 <!--OVERLAY EDIT MEMBER-->
                              <div id="overlay-background-edit" class="overlay-background">
