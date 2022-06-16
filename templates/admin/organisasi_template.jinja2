@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/styleAdmin.css') }}">
 
-    <title>ADMIN</title>
+    <title>ORGANISASI</title>
 </head>
 <body>
 <header>
@@ -31,15 +31,11 @@
     <div class="rightside-content">
         {% block rightside_content %} {% endblock %}
     </div>
-    <div id="overlay-background-add" class="overlay-background">
-        <div id='overlay-add' class="overlay">
-            {% block overlay_add %} {% endblock %}
-        </div>
+    <div id='overlay-add' class="overlay">
+        {% block overlay_add %} {% endblock %}
     </div>
-    <div id="overlay-background-edit" class="overlay-background">
-        <div id="overlay-edit" class="overlay">
-            {% block overlay_edit %} {% endblock %}
-        </div>
+    <div id="overlay-edit" class="overlay">
+        {% block overlay_edit %} {% endblock %}
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

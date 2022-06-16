@@ -75,36 +75,50 @@
                                 </td>
                             </tr>
                                 <!--OVERLAY EDIT MEMBER-->
-                            <div id="overlay-edit" class="overlay">
-                                <!-- BACK BOTTON -->
-                                <button class="btn btn-primary btn-back" onClick="offEdit()">Back</button>
-                                <div class="overlay-content">
-                                    <h2 class="overlay-title">EDIT GEDUNG</h2>
-                                    <!-- INPUT EDIT MEMBER -->
-                                    <div class="overlay-input">
-                                        <form action="/static">
-                                            <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
-                                            <input type="number" id="id_booking" name="id_booking" value=""class="form-control"><br>
-                                            <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
-                                            <input type="number" id="id_gedung" name="id_gedung" value=""class="form-control"><br>
-                                            <label for="NamaPenanggungJawab" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
-                                            <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                                            <label for="NamaPenanggungJawab" class="form-label">NAMA PENYEWA:</label><br>
-                                            <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                                            <label for="StartDate">START DATE:</label><br>
-                                            <input type="date" id="start_date" name="start_date"><br>
-                                            <label for="EndDate">END DATE:</label><br>
-                                            <input type="date" id="end_date" name="end_date"><br>
-                                            <label for="StartTime">START TIME:</label><br>
-                                            <input type="time" id="start_time" name="start_time"><br>
-                                            <label for="EndTime">END TIME:</label><br>
-                                            <input type="time" id="end_time" name="end_time"><br>
-                                            <input type="text" class="form-control" onkeydown="javascript: return isNumberInput(event);"/><br>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
+                             <div id="overlay-background-edit" class="overlay-background">
+                                <div id="overlay-edit" class="overlay">
+                                    <!-- BACK BOTTON -->
+                                    <button class="btn btn-primary btn-back" onClick="offEdit()">Back</button>
+                                    <div class="overlay-content">
+                                        <h2 class="overlay-title">EDIT BOOKING</h2>
+                                        <!-- INPUT EDIT MEMBER -->
+                                        <div class="overlay-input">
+                                            <form action="post">
+                                                <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
+                                                <input type="number" id="Idbooking" name="id_booking" value="" class="form-control"><br>
+                                                <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
+                                                <input type="number" id="idgedung" name="id_gedung" value="" class="form-control"><br>
+                                                <label for="NamaPenanggungJawabEdit" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
+                                                <input type="text" id="namapenanggungjawabEdit" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                                                <label for="NamaPenyewaEdit" class="form-label">NAMA PENYEWA:</label><br>
+                                                <input type="text" id="NamaPenyewaEdit" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                                                 <div class="row">
+                                                    <div class="col">
+                                                        <label for="start-date-edit" class="form-label">Mulai tanggal</label>
+                                                        <input type="date" id="start-date-edit" class="form-control" placeholder="DD/MM/YYYY" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="end-date-edit" class="form-label">Sampai tanggal</label>
+                                                        <input type="date" id="end-date-edit" class="form-control" placeholder="DD/MM/YYYY" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="start-time-edit" class="form-label">Jam Mulai</label>
+                                                        <input type="time" id="start-time-edit" class="form-control" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="end-time-edit" class="form-label">Jam Berakhir</label>
+                                                        <input type="time" id="end-time-edit" class="form-control" required>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                             </div>
                         </tbody>
                     </table>
                 </div>
@@ -112,37 +126,50 @@
         </div>
     </div>
     <!--OVERLAY ADD MEMBER -->
-    <div id="overlay-add" class="overlay">
-        <!-- BACK BOTTON -->
-        <button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
-        <div class="overlay-content">
-            <h2 class="overlay-title">CREATE GEDUNG</h2>
-            <!-- INPUT ADD MEMBER -->
-            <div class="overlay-input">
-                <form action="/static">
-                    <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
-                    <input type="number" id="id_booking" name="id_booking" value=""class="form-control"><br>
-                    <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
-                    <input type="number" id="id_gedung" name="id_gedung" value=""class="form-control"><br>
-                    <label for="NamaPenanggungJawab" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
-                    <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                    <label for="NamaPenanggungJawab" class="form-label">NAMA PENYEWA:</label><br>
-                    <input type="text" id="nama_penanggung_jawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                    <label for="StartDate">START DATE:</label><br>
-                    <input type="date" id="start_date" name="start_date"><br>
-                    <label for="EndDate">END DATE:</label><br>
-                    <input type="date" id="end_date" name="end_date"><br>
-                    <label for="StartTime">START TIME:</label><br>
-                    <input type="time" id="start_time" name="start_time"><br>
-                    <label for="EndTime">END TIME:</label><br>
-                    <input type="time" id="end_time" name="end_time"><br>
-                    <input type="text" class="form-control" onkeydown="javascript: return isNumberInput(event);"/><br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+     <div id="overlay-background-add" class="overlay-background">
+        <div id="overlay-add" class="overlay">
+            <!-- BACK BOTTON -->
+            <button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
+            <div class="overlay-content">
+                <h2 class="overlay-title">CREATE GEDUNG</h2>
+                <!-- INPUT ADD MEMBER -->
+                <div class="overlay-input">
+                    <form action="/static">
+                        <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
+                        <input type="number" id="id_booking" name="id_booking" value="" class="form-control"><br>
+                        <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
+                        <input type="number" id="id_gedung" name="id_gedung" value="" class="form-control"><br>
+                        <label for="NamaPenanggungJawab" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
+                        <input type="text" id="NamaPenanggungJawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                        <label for="NamaPenyewa" class="form-label">NAMA PENYEWA:</label><br>
+                        <input type="text" id="NamaPenyewa" name="nama_penanggung_jawab" value="" class="form-control"><br>
+                        <div class="row">
+                                <div class="col">
+                                    <label for="start-date" class="form-label">Mulai tanggal</label>
+                                    <input type="date" id="start-date" class="form-control" placeholder="DD/MM/YYYY" required>
+                                </div>
+                                <div class="col">
+                                    <label for="end-date" class="form-label">Sampai tanggal</label>
+                                    <input type="date" id="end-date" class="form-control" placeholder="DD/MM/YYYY" required>
+                                </div>
+                        </div>
+                        <div class="row">
+                                <div class="col">
+                                    <label for="start-time" class="form-label">Jam Mulai</label>
+                                    <input type="time" id="start-time" class="form-control" required>
+                                </div>
+                                <div class="col">
+                                    <label for="end-time" class="form-label">Jam Berakhir</label>
+                                    <input type="time" id="end-time" class="form-control" required>
+                                </div>
+                            </div>
+                        <input type="text" class="form-control" onkeydown="javascript: return isNumberInput(event);"/><br>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
+     </div>
 
 
 
@@ -159,21 +186,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
     <!--script for open and close overlay  -->
-    <script>
+     <script>
         function onAdd() {
           document.getElementById("overlay-add").style.display = "block";
+          document.getElementById("overlay-background-add").style.display = "block";
         }
 
         function offAdd() {
           document.getElementById("overlay-add").style.display = "none";
+          document.getElementById("overlay-background-add").style.display = "none";
         }
-        
+
         function onEdit() {
           document.getElementById("overlay-edit").style.display = "block";
+          document.getElementById("overlay-background-edit").style.display = "block";
         }
 
         function offEdit() {
           document.getElementById("overlay-edit").style.display = "none";
+          document.getElementById("overlay-background-edit").style.display = "none";
         }
         </script>
   </body>
