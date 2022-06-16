@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/styleAdmin.css') }}">
 
-    <title>ADMIN</title>
+    <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
 <header>
