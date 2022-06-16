@@ -221,5 +221,13 @@ def calculate_booking_price():
     return str(price)
 
 
+@app.route('/_/templates/admin/edit', methods=['post'])
+def templates_admin_edit():
+    a = request.form['a']
+    username = request.form['username']
+    password = request.form['password']
+    return render_template('admin/templates/admin-edit-template.jinja2', a=a, username=username, password=password)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
