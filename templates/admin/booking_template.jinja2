@@ -42,43 +42,5 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-{% block script %}
-<script>
-    function onAdd() {
-        document.getElementById("overlay-add").style.display = "block";
-        document.getElementById("overlay-background-add").style.display = "block";
-    }
-
-    function offAdd() {
-        document.getElementById("overlay-add").style.display = "none";
-        document.getElementById("overlay-background-add").style.display = "none";
-    }
-
-    function onEdit(whichId) {
-        let xmlHttpRequest = new XMLHttpRequest();
-        let formData = new FormData();
-        formData.append('id', whichId)
-        xmlHttpRequest.open('post', '/_/templates/admin_edit')
-        xmlHttpRequest.onreadystatechange = function () {
-            'use strict';
-            if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
-                const response = xmlHttpRequest.responseText;
-                console.log(response)
-                const placeholder = document.getElementById('overlay-edit-placeholder');
-                placeholder.innerHTML = response
-                document.querySelector(`#overlay-background-edit[data-booking="${whichId}"]`).style.display = "block"
-                document.querySelector(`#overlay-edit[data-booking="${whichId}"]`).style.display = "block";
-            } else if (xmlHttpRequest.status !== 200) {
-                console.error(`xmlHttpRequest status `, xmlHttpRequest.status)
-            }
-        }
-        xmlHttpRequest.send(formData)
-    }
-
-    function offEdit(whichId) {
-        document.querySelector(`#overlay-background-edit[data-booking="${whichId}"]`).remove();
-    }
-</script>
-{% endblock %}
 </body>
 </html>
