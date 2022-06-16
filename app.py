@@ -81,6 +81,13 @@ def admin_users_update(id):
     return redirect(url_for('admin_users_view'))
 
 
+@app.route('/admin/admin/delete/<id>', methods=['get'])
+@login_required
+def admin_user_delete(id):
+    admin_helper.delete(id)
+    return redirect(url_for('admin_users_view'))
+
+
 @app.route('/admin/booking')
 @login_required
 def admin_booking_view():
@@ -115,7 +122,7 @@ def admin_booking_edit(id):
     return redirect(url_for('admin_booking_view'))
 
 
-@app.route('/admin/booking/delete/<id>', methods=['post'])
+@app.route('/admin/booking/delete/<id>', methods=['get'])
 @login_required
 def admin_booking_delete(id):
     booking_helper.delete(id)
@@ -161,7 +168,7 @@ def load_user(id):
 
 @app.route('/')
 def index_view():
-    return render_template('admin/booking_test.html')
+    return render_template('index.html')
 
 
 @app.route('/booking')
@@ -229,12 +236,14 @@ def calculate_booking_price():
     return str(price)
 
 
-@app.route('/_/templates/admin/edit', methods=['post'])
-def templates_admin_edit():
-    pass
-
-
 @app.route('/_/templates/admin_edit', methods=['post'])
+def templates_admin_edit():
+    id = request.form['id']
+    the_admin = admin_helper.read_one(id)
+    return render_template('admin/component/admin_edit_overlay.jinja2', admin=the_admin)
+
+
+@app.route('/_/templates/booking_edit', methods=['post'])
 @login_required
 def templates_booking_edit():
     id = request.form['id']
