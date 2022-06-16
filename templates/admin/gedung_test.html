@@ -10,33 +10,31 @@
                 <tr class="table-primary">
                     <th class="text-center">ID GEDUNG</th>
                     <th class="text-center">NAMA GEDUNG</th>
-                    <th class="text-center">IMAGE</th>
-                    <th class="text-center">DESKRIPSI</th>
                     <th class="text-center">BASE PRICE</th>
                     <th colspan="2" class="text-center">Kontrol</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    {% for user in users %}
-                        <th class="text-center">{{ user.id_gedung }}</th>
-                        <td class="text-center">{{ user.nama_gedung }}</td>
-                        <td class="text-center">{{ user.image }}</td>
-                        <td class="text-center">{{ user.deskripsi }}</td>
-                        <td class="text-center">{{ user.base_price }}</td>
+                    {% for gedung in gedungs %}
+                        <th class="text-center">{{ gedung.id }}</th>
+                        <td class="text-center">{{ gedung.nama }}</td>
+                        <td class="text-center">{{ gedung.base_price }}</td>
                         <!-- Tombol edit -->
                         <td class="text-center">
-                            <button onClick="onEdit()" class="btn btn-primary">
+                            <button onClick="onEdit('{{ gedung.id }}')" class="btn btn-primary">
                                 <i class="bi bi-pencil-fill"></i>
                             </button>
                         </td>
 
                         <!--Tombol hapus -->
                         <td class="text-center">
-                            <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            <a href="{{ url_for('admin_gedung_delete', id=gedung.id) }}">
+                                <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            </a>
                         </td>
-                    {% endfor %}
                 </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -50,15 +48,9 @@
         <h2 class="overlay-title">CREATE GEDUNG</h2>
         <!-- INPUT ADD BORROW -->
         <div class="overlay-input">
-            <form action="{{ url_for('admin_users_create') }}" method="post">
-                <label for="id_gedung" class="form-label">ID GEDUNG:</label><br>
-                <input type="number" id="id_gedung" name="id_gedung" value=""class="form-control"><br>
+            <form action="{{ url_for('admin_gedung_create') }}" method="post">
                 <label for="nama" class="form-label">NAMA GEDUNG:</label><br>
                 <input type="text" id="Nama" name="Nama" value=""class="form-control"><br>
-                <label for="img">Select image:</label>
-                <input type="file" id="img" name="img" accept="image/*">
-                <label for="Deskripsi" class="form-label">DESKRIPSI:</label><br>
-                <input type="text" id="deskripsi" name="deskripsi" value=""class="form-control"><br>
                 <label for="BasePrice" class="form-label">BASE PRICE:</label><br>
                 <input type="int" id="baseprice" name="base_price" value=""class="form-control"><br>
                 <button type="submit" class="btn btn-primary">SUBMIT</button>
@@ -74,17 +66,13 @@
         <h2 class="overlay-title">EDIT GEDUNG </h2>
         <!-- INPUT EDIT BORROW -->
         <div class="overlay-input">
-            <form action="{{ url_for('admin_users_update', id='a') }}" method="post">
-                <label for="id_gedung_edit" class="form-label">ID GEDUNG:</label><br>
-                <input type="number" id="id_gedung_edit" name="id_gedung" value="" class="form-control"><br>
-                <label for="nama_gedung_edit" class="form-label">NAMA GEDUNG:</label><br>
-                <input type="text" id="nama_gedung_edit" name="nama_gedung" value="" class="form-control"><br>
-                <label for="image_gedung_edit" class="form-label">IMAGE</label><br>
-                <input type="text" id="image_gedung_edit" name="image_gedung" value="" class="form-control"><br>
-                <label for="deskripsi_gedung_edit" class="form-label">DESKRIPSI:</label><br>
-                <input type="text" id="deskripsi_gedung_edit" name="deskripsi_gedung" value="" class="form-control"><br>
-                <label for="baseprice_gedung_edit" class="form-label">BASE PRICE:</label><br>
-                <input type="int" id="baseprice_gedung_edit" name="baseprice_gedung" value="" class="form-control"><br>
+            <form action="{{ url_for('admin_gedung_update', id='a') }}" method="post">
+                <label for="id-gedung-edit" class="form-label">ID GEDUNG:</label><br>
+                <input type="number" id="id-gedung-edit" name="id_gedung" value="" class="form-control"><br>
+                <label for="nama-gedung-edit" class="form-label">NAMA GEDUNG:</label><br>
+                <input type="text" id="nama-gedung-edit" name="nama_gedung" value="" class="form-control"><br>
+                <label for="baseprice-gedung-edit" class="form-label">BASE PRICE:</label><br>
+                <input type="int" id="baseprice-gedung-edit" name="baseprice_gedung" value="" class="form-control"><br>
             </form>
         </div>
     </div>

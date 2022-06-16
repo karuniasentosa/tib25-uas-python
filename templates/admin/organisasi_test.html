@@ -16,19 +16,23 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for organisasi in orgs %}
                     <tr>
-                        <th class="text-center">1101</th>
-                        <td class="text-center">HIMA IT BIOS</td>
-                        <td class="text-center">himati_ancol@gmail.com</td>
-                        <td class="text-center">0878172738281</td>
+                        <th class="text-center">{{ organisasi.id}}</th>
+                        <td class="text-center">{{ organisasi.nama_organisasi}}</td>
+                        <td class="text-center">{{ organisasi.email}}</td>
+                        <td class="text-center">{{ organisasi.no_telp}}</td>
                         <td class="text-center">
-                            <button onClick="onEdit()" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
+                            <button onClick="onEdit('{{ organisasi.id }}')" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
                         </td>
                         <!--Tombol hapus -->
                         <td class="text-center">
-                            <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            <a href="{{ url_for('admin_organisasi_delete', id=organisasi.id) }}">
+                                <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            </a>
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -42,15 +46,13 @@
         <h2 class="overlay-title">CREATE ORGANISASI</h2>
         <!-- INPUT ADD RETURN -->
         <div class="overlay-input">
-            <form action="/static">
-                <label for="id-organisasi-add" class="form-label">ID ORGANISASI:</label><br>
-                <input type="number" id="Id-organisasi-add" name="id_organisasi" value=""class="form-control"><br>
+            <form action="{{ url_for('admin_organisasi_create') }}" method="post">
                 <label for="nama-organisasi-add" class="form-label">NAMA ORGANISASI:</label><br>
                 <input type="text" id="nama-organisasi-add" name="nama_organisasi" value="" class="form-control"><br>
                 <label for="Email-add" class="form-label">EMAIL:</label><br>
                 <input type="text" id="Email-add" name="email" value="" class="form-control"><br>
                 <label for="NoTelp-add" class="form-label">NO TELP:</label><br>
-                <input type="text" id="NoTelp-add" name="email" value="" class="form-control"><br>
+                <input type="text" id="NoTelp-add" name="NoTelp" value="" class="form-control"><br>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
@@ -64,15 +66,13 @@
         <h2 class="overlay-title">EDIT ORGANISASI </h2>
         <!-- INPUT EDIT RETURN-->
         <div class="overlay-input">
-            <form action="/static">
-                <label for="id-organisasi-edit" class="form-label">ID ORGANISASI:</label><br>
-                <input type="number" id="id-organisasi-edit" name="id_organisasi" value=""class="form-control"><br>
+            <form action="{{ url_for('admin_organisasi_update', id='a') }}" method="post">
                 <label for="nama-organisasi-edit" class="form-label">NAMA ORGANISASI:</label><br>
                 <input type="text" id="nama-organisasi-edit" name="nama_organisasi" value="" class="form-control"><br>
                 <label for="Email-edit" class="form-label">EMAIL:</label><br>
                 <input type="text" id="Email-edit" name="email" value="" class="form-control"><br>
                 <label for="NoTelp-edit" class="form-label">NO TELP:</label><br>
-                <input type="text" id="NoTelp-edit" name="email" value="" class="form-control"><br>
+                <input type="text" id="NoTelp-edit" name="NoTlp" value="" class="form-control"><br>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

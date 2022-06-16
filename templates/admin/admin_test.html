@@ -20,14 +20,17 @@
                         <td class="text-center">{{ user.username }}</td>
                         <!-- Tombol edit -->
                         <td class="text-center">
-                            <button onClick="onEdit()" class="btn btn-primary">
+                            <button onClick="onEdit('{{ user.id }}'))" class="btn btn-primary">
                                 <i class="bi bi-pencil-fill"></i>
                             </button>
                         </td>
 
                         <!--Tombol hapus -->
+
                         <td class="text-center">
-                            <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            <a href="{{ url_for('admin_user_delete', id= user.id) }}">
+                                <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            </a>
                         </td>
                     {% endfor %}
                 </tr>
