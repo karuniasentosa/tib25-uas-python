@@ -202,6 +202,7 @@
         if (startDate.value == today.toISO8601DateString()) {
             document.getElementById("start-time").setAttribute("min", startTime);
         }
+        document.getElementById("end-date").setAttribute("min", startDate.value);
     }
 
     endDate.onchange = () => {

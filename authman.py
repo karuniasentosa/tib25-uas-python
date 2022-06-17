@@ -1,3 +1,4 @@
+import random
 import time
 
 from sqlalchemy.engine import Engine
@@ -40,7 +41,8 @@ class AuthMan:
 
     @staticmethod
     def register(engine: Engine, username, password):
-        new_admin: AdminModel = AdminModel(int(time.time()*100), username, generate_password_hash(password))
+        id = random.getrandbits(15)
+        new_admin: AdminModel = AdminModel(id, username, generate_password_hash(password))
         admin_helper = AdminHelper(engine)
         admin_helper.create(new_admin)
 

@@ -64,7 +64,7 @@ class AdminHelper:
         :param idAdmin: id admin yang dicari
         :return:
         """
-        the_admin: AdminModel = self.read_one_by_user(idAdmin)
+        the_admin: AdminModel = self.read_one(idAdmin)
         with Session(self.engine) as session:
             session.delete(the_admin)
             session.commit()
