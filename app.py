@@ -14,6 +14,9 @@ from authman import *
 from booking import *
 from gedung import *
 
+import pdfkit
+import os
+
 app = Flask(__name__)
 
 engine = create_engine("sqlite:///serbaguna.db")
@@ -29,6 +32,9 @@ admin_helper = AdminHelper(engine)
 organisasi_helper = OrganisasiHelper(engine)
 booking_helper = BookingHelper(engine)
 gedung_helper = GedungHelper(engine)
+
+app.config['PDF_FOLDER'] = os.path.realpath('.') + '\\static\\pdf'
+app.config['TEMPLATE_FOLDER'] = os.path.realpath('.') + '\\templates'
 
 
 # login view
@@ -239,6 +245,7 @@ def load_user(id):
     return admin_helper.read_one(id)
 
 
+
 @app.route('/')
 def index_view():
     return render_template('index.html')
@@ -281,6 +288,10 @@ def about_view():
     return render_template('user/about.html')
 
 
+def booking_table():
+    booking_list = booking_helper.read()
+    return render_template('admin/booking_table.html', booking_list = booking_list)
+
 @app.route('/_/getcompanymp', methods=['post'])
 def get_company_mail_and_phone():
     """
@@ -316,7 +327,6 @@ def calculate_booking_price():
     price = gedung.base_price * (diffhour * diffdays)
 
     return str(price)
-
 
 @app.route('/_/templates/admin_edit', methods=['post'])
 @login_required
@@ -360,6 +370,22 @@ def templates_organisasi_edit():
     id = request.form['id']
     the_organisasi = organisasi_helper.read_one(id)
     return render_template('admin/component/organisasi_edit_overlay.jinja2', org=the_organisasi)
+
+
+#http://127.0.0.1:5000/konversi
+@app.route('/konversi')
+def konversi():
+    options = {
+        'orientation': 'Landscape',
+    }
+    pdffile = app.config['PDF_FOLDER'] + '\\Booking_table.pdf'
+    config = pdfkit.configuration(wkhtmltopdf='E:\\1. App Data x86\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+    rendered = booking_table()
+    pdfkit.from_string(rendered, pdffile, configuration=config, options=options)
+    return '''
+    konversi berhasil, anda dapat mendownload pdfnya<br>
+    <a href = "http://127.0.0.1:5000/static/pdf/Booking_table.pdf">disini</a>
+    '''
 
 
 if __name__ == '__main__':
