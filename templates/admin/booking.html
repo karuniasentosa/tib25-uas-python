@@ -1,213 +1,187 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends 'admin/templates/admin_template.jinja2' %}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+{% block title %} BOOKING {% endblock %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/styleAdmin.css') }}">
-
-    <title>BOOKING</title>
-  </head>
-  <body>
-    <header>
-        <div class="logo">
-            <h1 class="logo-wa">KELOMPOK 2</h1>
-        </div>
-    </header>
-    <!-- INDEX WRAPPER -->
-    <div class="index-wrapper">
-        <!-- LEFT SIDE -->
-        <div class="leftside-wrapper">
-            <ul>
-                <li><a href="booking.html">BOOKING</a></li>
-                <li><a href="gedung.html">GEDUNG</a></li>
-                <li><a href="admin.html">ADMIN</a></li>
-                <li><a href="organisasi.html">ORGANISASI</a></li>
-                <li><a href="../index.html">LOG OUT</a></li>
-            </ul>
-        </div>
-        <!-- RIGHT CONTENT -->
-        <div class="rightside-content">
-            <!-- button -->
-            <button class="btn btn-primary" onclick="onAdd()">CREATE BOOKING</button>
-
-            <div class="content">
-                <h2 class="page-title">DATABASE BOOKING</h2>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr class="table-primary">
-                                <th class="text-center">BOOKING ID</th>
-                                <th class="text-center">ID GEDUNG</th>
-                                <th class="text-center">NAMA PENANGGUNG JAWAB</th>
-                                <th class="text-center">NAMA PENYEWA</th>
-                                <th class="text-center">START DATE</th>
-                                <th class="text-center">END DATE</th>
-                                <th class="text-center">START TIME</th>
-                                <th class="text-center">END TIME</th>
-                                <th colspan="2" class="text-center">Kontrol</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                {% for booking in booking_list %}
-                                    <th class="text-center">{% booking.id %}</th>
-                                    <td class="text-center">{% booking.gedung_id %}</td>
-                                    <td class="text-center">{% booking.nama_penanggungjawab %}</td>
-                                    <td class="text-center">{% booking.penyewa %}</td>
-                                    <td class="text-center">{% booking.start_data %}</td>
-                                    <td class="text-center">{% booking.end_date %}</td>
-                                    <td class="text-center">{% booking.start_time %}</td>
-                                    <td class="text-center">{% booking.end_time %}</td>
-
-                                    <!-- Tombol edit -->
-                                    <td class="text-center">
-                                        <button onClick="onEdit()" class="btn btn-primary"><i class="bi bi-pencil-fill"></i></button>
-                                    </td>
-
-                                    <!--Tombol hapus -->
-                                    <td class="text-center">
-                                        <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
-                                    </td>
-                                {% endfor %}
-                            </tr>
-                                <!--OVERLAY EDIT MEMBER-->
-                             <div id="overlay-background-edit" class="overlay-background">
-                                <div id="overlay-edit" class="overlay">
-                                    <!-- BACK BOTTON -->
-                                    <button class="btn btn-primary btn-back" onClick="offEdit()">Back</button>
-                                    <div class="overlay-content">
-                                        <h2 class="overlay-title">EDIT BOOKING</h2>
-                                        <!-- INPUT EDIT MEMBER -->
-                                        <div class="overlay-input">
-                                            <form action="post">
-                                                <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
-                                                <input type="number" id="Idbooking" name="id_booking" value="" class="form-control"><br>
-                                                <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
-                                                <input type="number" id="idgedung" name="id_gedung" value="" class="form-control"><br>
-                                                <label for="NamaPenanggungJawabEdit" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
-                                                <input type="text" id="namapenanggungjawabEdit" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                                                <label for="NamaPenyewaEdit" class="form-label">NAMA PENYEWA:</label><br>
-                                                <input type="text" id="NamaPenyewaEdit" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                                                 <div class="row">
-                                                    <div class="col">
-                                                        <label for="start-date-edit" class="form-label">Mulai tanggal</label>
-                                                        <input type="date" id="start-date-edit" class="form-control" placeholder="DD/MM/YYYY" required>
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="end-date-edit" class="form-label">Sampai tanggal</label>
-                                                        <input type="date" id="end-date-edit" class="form-control" placeholder="DD/MM/YYYY" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="start-time-edit" class="form-label">Jam Mulai</label>
-                                                        <input type="time" id="start-time-edit" class="form-control" required>
-                                                    </div>
-                                                    <div class="col">
-                                                        <label for="end-time-edit" class="form-label">Jam Berakhir</label>
-                                                        <input type="time" id="end-time-edit" class="form-control" required>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                             </div>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+{% block rightside_content %}
+    <button class="btn btn-primary" onclick="onAdd()">CREATE BOOKING</button>
+    <div class="content">
+        <h2 class="page-title">DATABASE BOOKING</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr class="table-primary">
+                    <th class="text-center">BOOKING ID</th>
+                    <th class="text-center">ID GEDUNG</th>
+                    <th class="text-center">NAMA PENANGGUNG JAWAB</th>
+                    <th class="text-center">NAMA PENYEWA</th>
+                    <th class="text-center">START DATE</th>
+                    <th class="text-center">END DATE</th>
+                    <th class="text-center">START TIME</th>
+                    <th class="text-center">END TIME</th>
+                    <th colspan="2" class="text-center">Kontrol</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for booking in booking_list %}
+                    <tr>
+                        <th class="text-center">{{ booking.id }}</th>
+                        <td class="text-center">{{ booking.gedung_id }}</td>
+                        <td class="text-center">{{ booking.nama_penanggungjawab }}</td>
+                        <td class="text-center">{{ booking.penyewa }}</td>
+                        <td class="text-center">{{ booking.start_date }}</td>
+                        <td class="text-center">{{ booking.end_date }}</td>
+                        <td class="text-center">{{ booking.start_time }}</td>
+                        <td class="text-center">{{ booking.end_time }}</td>
+                        <!-- Tombol edit -->
+                        <td class="text-center">
+                            <button onClick="onEdit('{{ booking.id }}')" class="btn btn-primary"><i
+                                    class="bi bi-pencil-fill"></i></button>
+                        </td>
+                        <!--Tombol hapus -->
+                        <td class="text-center">
+                            <a href="{{ url_for('admin_booking_delete', id=booking.id) }}">
+                                <button class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-    <!--OVERLAY ADD MEMBER -->
-     <div id="overlay-background-add" class="overlay-background">
-        <div id="overlay-add" class="overlay">
-            <!-- BACK BOTTON -->
-            <button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
-            <div class="overlay-content">
-                <h2 class="overlay-title">CREATE GEDUNG</h2>
-                <!-- INPUT ADD MEMBER -->
-                <div class="overlay-input">
-                    <form action="/static">
-                        <label for="IdBooking" class="form-label">BOOKING ID:</label><br>
-                        <input type="number" id="id_booking" name="id_booking" value="" class="form-control"><br>
-                        <label for="IdGedung" class="form-label">ID GEDUNG:</label><br>
-                        <input type="number" id="id_gedung" name="id_gedung" value="" class="form-control"><br>
-                        <label for="NamaPenanggungJawab" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
-                        <input type="text" id="NamaPenanggungJawab" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                        <label for="NamaPenyewa" class="form-label">NAMA PENYEWA:</label><br>
-                        <input type="text" id="NamaPenyewa" name="nama_penanggung_jawab" value="" class="form-control"><br>
-                        <div class="row">
-                                <div class="col">
-                                    <label for="start-date" class="form-label">Mulai tanggal</label>
-                                    <input type="date" id="start-date" class="form-control" placeholder="DD/MM/YYYY" required>
-                                </div>
-                                <div class="col">
-                                    <label for="end-date" class="form-label">Sampai tanggal</label>
-                                    <input type="date" id="end-date" class="form-control" placeholder="DD/MM/YYYY" required>
-                                </div>
-                        </div>
-                        <div class="row">
-                                <div class="col">
-                                    <label for="start-time" class="form-label">Jam Mulai</label>
-                                    <input type="time" id="start-time" class="form-control" required>
-                                </div>
-                                <div class="col">
-                                    <label for="end-time" class="form-label">Jam Berakhir</label>
-                                    <input type="time" id="end-time" class="form-control" required>
-                                </div>
-                            </div>
-                        <input type="text" class="form-control" onkeydown="javascript: return isNumberInput(event);"/><br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+{% endblock %}
+
+{% block overlay_add %}
+    <button class="btn btn-primary btn-back" onClick="offAdd()">Back</button>
+    <div class="overlay-content">
+        <h2 class="overlay-title">CREATE GEDUNG</h2>
+        <!-- INPUT ADD MEMBER -->
+        <div class="overlay-input">
+            <form action="{{ url_for('admin_booking_create') }}" method="post">
+                <label for="gedung" class="form-label">ID GEDUNG:</label><br>
+                <select class="form-select" id="gedung" name="gedung_id" aria-label="Default select example"
+                        required>
+                    <option selected value="">Pilih disini ...</option>
+                    {% for gedung in gedungs %}
+                        <option value="{{ gedung.id }}">{{ gedung.nama }}</option>
+                    {% endfor %}
+                </select>
+                <label for="nama-penanggungjawab-add" class="form-label">NAMA PENANGGUNG JAWAB:</label><br>
+                <input type="text" id="nama-penanggungjawab-add" name="nama_penanggungjawab" value=""
+                       class="form-control"><br>
+                <label for="nama-organisasi-add" class="form-label">NAMA PERUSAHAAN:</label><br>
+                <input type="text" class="form-control" list="nama-org" id="nama-organisasi-add"
+                       name="nama_organisasi" placeholder="cari disini ..." required>
+                <datalist id="nama-org">
+                    {% for org in orgs %}
+                        <option value="{{ org.nama_organisasi }}"></option>
+                    {% endfor %}
+                </datalist>
+                <br>
+                <label for="email-add" class="form-label">EMAIL:</label><br>
+                <input type="email" id="email-add" name="email" value="" class="form-control">
+                <label for="notlp-add" class="form-label">NO TELEPON:</label><br>
+                <input type="text" id="notlp-add" name="nomor_telepon" value="" class="form-control"><br>
+                <div class="row" style="">
+                    <div class="col">
+                        <label for="start-date" class="form-label">MULAI TANGGAL</label>
+                        <input type="date" id="start-date" name="start_date" class="form-control"
+                               placeholder="DD/MM/YYYY" required>
+                    </div>
+                    <div class="col">
+                        <label for="end-date" class="form-label">SAMPAI TANGGAL </label>
+                        <input type="date" id="end-date" name="end_date" class="form-control" placeholder="DD/MM/YYYY"
+                               required>
+                    </div>
                 </div>
-            </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <label for="start-time" class="form-label">JAM MULAI</label>
+                        <input type="time" id="start-time" name="start_time" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label for="end-time" class="form-label">JAM BERAKHIR</label>
+                        <input type="time" id="end-time" name="end_time" class="form-control" required>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
-     </div>
-
-
-
-    <!-- <div class="jumbotron">
-        <h1 align="center" class="judul">PERPUSTAKAAN UBM</h1>
     </div>
-    </div> -->
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{% endblock %}
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
-    <!--script for open and close overlay  -->
-     <script>
+{% block overlay_edit %}
+    <div id="overlay-edit-placeholder"></div>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+
+        const xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const responseText = xhr.responseText
+                const json = JSON.parse(responseText)
+                document.getElementById('notlp-add').value = json['phone']
+                document.getElementById('email-add').value = json['email']
+                document.getElementById('notlp-add').readOnly = true
+                document.getElementById('email-add').readOnly = true
+            } else if (xhr.status === 404) {
+                console.log('not found');
+                document.getElementById('notlp-add').value = ''
+                document.getElementById('email-add').value = ''
+                document.getElementById('notlp-add').readOnly = false
+                document.getElementById('email-add').readOnly = false
+            }
+        }
+
+        const org_name = document.querySelector('#nama-organisasi-add')
+        org_name.onchange = (ev) => {
+            if (org_name.value !== '') {
+                xhr.open('post', '/_/getcompanymp')
+                const formData = new FormData()
+                formData.append('orgname', org_name.value)
+                xhr.send(formData)
+            }
+        }
+
+
         function onAdd() {
-          document.getElementById("overlay-add").style.display = "block";
-          document.getElementById("overlay-background-add").style.display = "block";
+            document.getElementById("overlay-add").style.display = "block";
+            document.getElementById("overlay-background-add").style.display = "block";
         }
 
         function offAdd() {
-          document.getElementById("overlay-add").style.display = "none";
-          document.getElementById("overlay-background-add").style.display = "none";
+            document.getElementById("overlay-add").style.display = "none";
+            document.getElementById("overlay-background-add").style.display = "none";
         }
 
-        function onEdit() {
-          document.getElementById("overlay-edit").style.display = "block";
-          document.getElementById("overlay-background-edit").style.display = "block";
+        function onEdit(whichId) {
+            let xmlHttpRequest = new XMLHttpRequest();
+            let formData = new FormData();
+            formData.append('id', whichId)
+            xmlHttpRequest.open('post', '/_/templates/booking_edit')
+            xmlHttpRequest.onreadystatechange = function () {
+                'use strict';
+                if (xmlHttpRequest.readyState === 4 && xmlHttpRequest.status === 200) {
+                    const response = xmlHttpRequest.responseText;
+                    console.log(response)
+                    const placeholder = document.getElementById('overlay-edit-placeholder');
+                    placeholder.innerHTML = response
+                    document.querySelector(`#overlay-background-edit[data-booking="${whichId}"]`).style.display = "block"
+                    document.querySelector(`#overlay-edit[data-booking="${whichId}"]`).style.display = "block";
+                } else if (xmlHttpRequest.status !== 200) {
+                    console.error(`xmlHttpRequest status `, xmlHttpRequest.status)
+                }
+            }
+            xmlHttpRequest.send(formData)
         }
 
-        function offEdit() {
-          document.getElementById("overlay-edit").style.display = "none";
-          document.getElementById("overlay-background-edit").style.display = "none";
+        function offEdit(whichId) {
+            document.querySelector(`#overlay-background-edit[data-booking="${whichId}"]`).remove();
         }
-        </script>
-  </body>
-</html>
+    </script>
+{% endblock %}
