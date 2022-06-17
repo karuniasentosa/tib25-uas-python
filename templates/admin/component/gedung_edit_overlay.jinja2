@@ -1,0 +1,22 @@
+<!-- BACK BOTTON -->
+<div class="overlay-background" id="overlay-background-edit" data-gedung="{{ gedung.id }}">
+    <div class="overlay" id="overlay-edit" data-gedung="{{ gedung.id }}">
+        <button class="btn btn-primary btn-back" onClick="offEdit('{{ gedung.id }}')">BACK</button>
+        <div class="overlay-content">
+            <h2 class="overlay-title">EDIT GEDUNG </h2>
+            <!-- INPUT EDIT BORROW -->
+            <div class="overlay-input">
+                <form action="{{ url_for('admin_gedung_update', id=gedung.id) }}" method="post">
+                    <label for="id-gedung-edit" class="form-label">ID GEDUNG:</label><br>
+                    <input type="number" id="id-gedung-edit" name="id_gedung" value="{{ gedung.id }}" readonly class="form-control"><br>
+                    <label for="nama-gedung-edit" class="form-label">NAMA GEDUNG:</label><br>
+                    <input type="text" id="nama-gedung-edit" name="nama_gedung" value="{{ gedung.nama }}" class="form-control"><br>
+                    <label for="baseprice-gedung-edit" class="form-label">BASE PRICE:</label><br>
+                    <input type="number" id="baseprice-gedung-edit" name="baseprice_gedung" value="{{ gedung.base_price }}"
+                           class="form-control"><br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

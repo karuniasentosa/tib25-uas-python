@@ -1,0 +1,21 @@
+<div class="overlay-background" id="overlay-background-edit" data-org="{{ org.id }}">
+    <div id="overlay-edit" class="overlay" data-org="{{ org.id }}">
+        <!-- BACK BOTTON -->
+        <button class="btn btn-primary btn-back" onClick="offEdit('{{ org.id }}')">Back</button>
+        <div class="overlay-content">
+            <h2 class="overlay-title">EDIT ADMIN </h2>
+            <!-- INPUT EDIT BORROW -->
+            <div class="overlay-input">
+                <form action="{{ url_for('admin_organisasi_update', id=org.id) }}" method="post">
+                    <label for="nama-organisasi-edit" class="form-label">NAMA ORGANISASI:</label><br>
+                <input type="text" id="nama-organisasi-edit" name="nama_organisasi" value="{{ org.nama_organisasi }}" class="form-control"><br>
+                <label for="Email-edit" class="form-label">EMAIL:</label><br>
+                <input type="text" id="Email-edit" name="email" value="{{ org.email }}" class="form-control"><br>
+                <label for="NoTelp-edit" class="form-label">NO TELP:</label><br>
+                <input type="text" id="NoTelp-edit" name="NoTlp" value="{{ org.no_telp }}" class="form-control"><br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
