@@ -380,7 +380,7 @@ def konversi():
         'orientation': 'Landscape',
     }
     pdffile = app.config['PDF_FOLDER'] + '\\Booking_table.pdf'
-    config = pdfkit.configuration(wkhtmltopdf='E:\\1. App Data x86\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
+    config = pdfkit.configuration(wkhtmltopdf=wkhtmltopdf_bin)
     rendered = booking_table()
     pdfkit.from_string(rendered, pdffile, configuration=config, options=options)
     return '''
