@@ -1,6 +1,8 @@
+import random
 import secrets
 from datetime import datetime as dt
 
+import flask
 from flask import Flask, request, redirect, url_for, render_template, abort, jsonify
 from sqlalchemy import create_engine
 from flask_login import LoginManager
@@ -51,7 +53,7 @@ def admin_login_view():
 @login_required
 def admin_users_view():
     admins = admin_helper.read()
-    return render_template('admin/admin_test.html', users=admins)
+    return render_template('admin/admin.html', users=admins)
     pass
 
 
@@ -92,7 +94,9 @@ def admin_user_delete(id):
 @login_required
 def admin_booking_view():
     booking_list = booking_helper.read()
-    return render_template('admin/booking_test.html', booking_list=booking_list)
+    gedung_list = gedung_helper.read()
+    organisasi_list = organisasi_helper.read()
+    return render_template('admin/booking.html', booking_list=booking_list, gedungs=gedung_list, orgs=organisasi_list)
 
 
 @app.route('/admin/booking/create', methods=['POST'])
@@ -262,11 +266,11 @@ def booking_create():
     nama_penanggungjawab = request.form['nama_penanggungjawab']
     nama_organisasi = request.form['nama_organisasi']
     organisasi: OrganisasiModel = organisasi_helper.read_one_by_name(nama_organisasi)
-    email = request.form['email']
-    nomor_telp = request.form['nomor_telepon']
     if organisasi is None:
         # Create new organization
         new_id = int(time.time())
+        email = request.form['email']
+        nomor_telp = request.form['nomor_telepon']
         organisasi_helper.create(OrganisasiModel(new_id, nama_organisasi, email, nomor_telp))
         organisasi = organisasi_helper.read_one(new_id)
     start_date = request.form['start_date']
@@ -316,6 +320,7 @@ def calculate_booking_price():
 
 
 @app.route('/_/templates/admin_edit', methods=['post'])
+@login_required
 def templates_admin_edit():
     id = request.form['id']
     the_admin = admin_helper.read_one(id)
@@ -328,6 +333,22 @@ def templates_booking_edit():
     id = request.form['id']
     the_booking = booking_helper.read_one(id)
     return render_template('admin/component/booking_edit_overlay.jinja2', booking=the_booking)
+
+
+@app.route('/_/templates/gedung_edit', methods=['post'])
+@login_required
+def templates_gedung_edit():
+    id = request.form['id']
+    the_gedung = gedung_helper.read_one(id)
+    return render_template('admin/component/gedung_edit_overlay.jinja2', gedung=the_gedung)
+
+
+@app.route('/_/templates/organisasi_edit', methods=['post'])
+@login_required
+def templates_organisasi_edit():
+    id = request.form['id']
+    the_organisasi = organisasi_helper.read_one(id)
+    return render_template('admin/component/organisasi_edit_overlay.jinja2', org=the_organisasi)
 
 
 if __name__ == '__main__':
