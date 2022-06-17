@@ -159,7 +159,7 @@ def load_user(id):
 
 @app.route('/')
 def index_view():
-    return render_template('admin/booking_table.html')
+    return render_template('admin/booking_test.html')
 
 
 @app.route('/booking')
@@ -229,7 +229,8 @@ def calculate_booking_price():
     price = gedung.base_price * (diffhour * diffdays)
 
     return str(price)
-#http://127.0.0.1:5000/konversi
+
+
 @app.route('/konversi')
 def konversi():
     options = {
