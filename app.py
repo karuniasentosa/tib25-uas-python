@@ -35,6 +35,7 @@ gedung_helper = GedungHelper(engine)
 
 app.config['PDF_FOLDER'] = os.path.realpath('.') + '\\static\\pdf'
 app.config['TEMPLATE_FOLDER'] = os.path.realpath('.') + '\\templates'
+wkhtmltopdf_bin = 'E:\\1. App Data x86\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
 
 
 # login view
