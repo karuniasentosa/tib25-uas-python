@@ -137,12 +137,81 @@ def admin_organisasi_view():
     pass
 
 
+@app.route('/admin/organisasi/create', methods=['post'])
+@login_required
+def admin_organisasi_create():
+    nama_organisasi = request.form['nama_organisasi']
+    email = request.form['email']
+    no_telp = request.form['NoTelp']
+    id = random.getrandbits(16)
+    new_organisasi = OrganisasiModel(id, nama_organisasi, email, no_telp)
+    organisasi_helper.create(new_organisasi)
+
+    return redirect(url_for('admin_organisasi_view'))
+
+
+@app.route('/admin/organisasi/update/<id>', methods=['post'])
+@login_required
+def admin_organisasi_update(id):
+    nama_organisasi = request.form['nama_organisasi']
+    email = request.form['email']
+    no_telp = request.form['NoTlp']
+    the_organisasi: OrganisasiModel = organisasi_helper.read_one(id)
+    the_organisasi.nama_organisasi = nama_organisasi
+    the_organisasi.email = email
+    the_organisasi.no_telp = no_telp
+    organisasi_helper.update(id, the_organisasi)
+
+    return redirect(url_for('admin_organisasi_view'))
+
+
+@app.route('/admin/organisasi/delete/<id>', methods=['get'])
+@login_required
+def admin_organisasi_delete(id):
+    organisasi_helper.delete(id)
+
+    return redirect(url_for('admin_organisasi_view'))
+
+
 @app.route('/admin/gedung')
 @login_required
 def admin_gedung_view():
     gedungs = gedung_helper.read()
     return render_template('admin/gedung.html', gedungs=gedungs)
-    pass
+
+
+@app.route('/admin/gedung/create', methods=['post'])
+@login_required
+def admin_gedung_create():
+    nama = request.form['nama']
+    base_price = request.form['base_price']
+    id = random.getrandbits(8)
+    new_gedung = GedungModel(id, nama, int(base_price))
+    gedung_helper.create(new_gedung)
+
+    return redirect(url_for('admin_gedung_view'))
+
+
+@app.route('/admin/gedung/update/<id>', methods=['post'])
+@login_required
+def admin_gedung_update(id):
+    nama = request.form['nama_gedung']
+    base_price = request.form['baseprice_gedung']
+    the_gedung: GedungModel = gedung_helper.read_one(id)
+    the_gedung.nama = nama
+    the_gedung.base_price = base_price
+    gedung_helper.update(id, the_gedung)
+
+    return redirect(url_for('admin_gedung_view'))
+
+
+@app.route('/admin/gedung/delete/<id>', methods=['get'])
+@login_required
+def admin_gedung_delete(id):
+    gedung_helper.delete(id)
+    redirect(url_for('admin_gedung_view'))
+
+    return redirect(url_for('admin_gedung_view'))
 
 
 @app.route('/admin/logout')
