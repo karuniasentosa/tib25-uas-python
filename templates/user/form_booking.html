@@ -214,16 +214,16 @@
     document.getElementById("end-date").setAttribute("min", date_string);
 
     const namaPerusahaanElem = document.getElementById('nama-perusahaan');
-    const xmlHttpRequestNamaPerusahaan = new XMLHttpRequest();
-    xmlHttpRequestNamaPerusahaan.onreadystatechange = function () {
-        if (xmlHttpRequestNamaPerusahaan.readyState === 4 && xmlHttpRequestNamaPerusahaan.status === 200) {
-            const responseText = xmlHttpRequestNamaPerusahaan.responseText
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseText = xhr.responseText
             const json = JSON.parse(responseText)
             document.getElementById('nomor-telepon').value = json['phone']
             document.getElementById('email').value = json['email']
             document.getElementById('nomor-telepon').readOnly = true
             document.getElementById('email').readOnly = true
-        } else if (xmlHttpRequestNamaPerusahaan.status === 404) {
+        } else if (xhr.status === 404) {
             console.log('not found');
             document.getElementById('nomor-telepon').value = ''
             document.getElementById('email').value = ''
@@ -234,10 +234,10 @@
 
     namaPerusahaanElem.onchange = (ev) => {
         if (namaPerusahaanElem.value !== '') {
-            xmlHttpRequestNamaPerusahaan.open('post', '/_/getcompanymp')
+            xhr.open('post', '/_/getcompanymp')
             const formData = new FormData()
             formData.append('orgname', namaPerusahaanElem.value)
-            xmlHttpRequestNamaPerusahaan.send(formData)
+            xhr.send(formData)
         }
     }
 
