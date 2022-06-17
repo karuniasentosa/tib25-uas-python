@@ -2,7 +2,6 @@ import random
 import secrets
 from datetime import datetime as dt
 
-import flask
 from flask import Flask, request, redirect, url_for, render_template, abort, jsonify
 from sqlalchemy import create_engine
 from flask_login import LoginManager
@@ -240,15 +239,6 @@ def load_user(id):
     return admin_helper.read_one(id)
 
 
-# @login_manager.unauthorized_callback
-# def unauthorized():
-#     """
-#     Halaman yang di-redirect ketika tidak ada user yang login
-#     """
-#     # TODO: Buat halaman unauthorized?
-#     pass
-
-
 @app.route('/')
 def index_view():
     return render_template('index.html')
@@ -293,6 +283,10 @@ def about_view():
 
 @app.route('/_/getcompanymp', methods=['post'])
 def get_company_mail_and_phone():
+    """
+    API untuk menampilkan email dan nomor telp dari suatu nama organisais
+    :return: JSON
+    """
     name = request.form['orgname']
     organisasi: OrganisasiModel = organisasi_helper.read_one_by_name(name)
     if organisasi is None:
@@ -305,6 +299,11 @@ def get_company_mail_and_phone():
 
 @app.route('/_/calbookprice', methods=['post'])
 def calculate_booking_price():
+    """
+    API untuk menghitung harga booking dari tanggal awal-akhir,
+    dan waktu awal-akhir
+    :return: Harga sewa
+    """
     start_date = dt.strptime(request.form['start_date'], '%Y-%m-%d')
     end_date = dt.strptime(request.form['end_date'], '%Y-%m-%d')
     start_time = dt.strptime(request.form['start_time'], '%H:%M')
@@ -322,6 +321,9 @@ def calculate_booking_price():
 @app.route('/_/templates/admin_edit', methods=['post'])
 @login_required
 def templates_admin_edit():
+    """
+    mengembalikan komponen untuk admin-edit
+    """
     id = request.form['id']
     the_admin = admin_helper.read_one(id)
     return render_template('admin/component/admin_edit_overlay.jinja2', admin=the_admin)
@@ -330,6 +332,9 @@ def templates_admin_edit():
 @app.route('/_/templates/booking_edit', methods=['post'])
 @login_required
 def templates_booking_edit():
+    """
+    mengembalikan komponen untuk booking-edit
+    """
     id = request.form['id']
     the_booking = booking_helper.read_one(id)
     return render_template('admin/component/booking_edit_overlay.jinja2', booking=the_booking)
@@ -338,6 +343,9 @@ def templates_booking_edit():
 @app.route('/_/templates/gedung_edit', methods=['post'])
 @login_required
 def templates_gedung_edit():
+    """
+    mengembalikan komponen untuk gedung-edit
+    """
     id = request.form['id']
     the_gedung = gedung_helper.read_one(id)
     return render_template('admin/component/gedung_edit_overlay.jinja2', gedung=the_gedung)
@@ -346,6 +354,9 @@ def templates_gedung_edit():
 @app.route('/_/templates/organisasi_edit', methods=['post'])
 @login_required
 def templates_organisasi_edit():
+    """
+    mengembalikan komponen untuk organisasi-edit
+    """
     id = request.form['id']
     the_organisasi = organisasi_helper.read_one(id)
     return render_template('admin/component/organisasi_edit_overlay.jinja2', org=the_organisasi)
