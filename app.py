@@ -98,13 +98,23 @@ def admin_booking_view():
 @app.route('/admin/booking/create', methods=['POST'])
 @login_required
 def admin_booking_create():
-    id = int(time.time() * 100)
+    nama_penanggungjawab = request.form['nama_penanggungjawab']
+    nama_organisasi = request.form['nama_organisasi']
+    organisasi: OrganisasiModel = organisasi_helper.read_one_by_name(nama_organisasi)
+    if organisasi is None:
+        # Create new organization
+        new_id = int(time.time())
+        email = request.form['email']
+        nomor_telp = request.form['nomor_telepon']
+        organisasi_helper.create(OrganisasiModel(new_id, nama_organisasi, email, nomor_telp))
+        organisasi = organisasi_helper.read_one(new_id)
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    start_time = request.form['start_time']
+    end_time = request.form['end_time']
     gedung_id = int(request.form['gedung_id'])
-    penanggungjawab = request.form['penanggungjawab']
-    penyewa = int(request.form['penyewa'])
-    start_datetime = request.form['start_datetime']
-    end_datetime = request.form['end_datetime']
-    new_booking = BookingModel(id, gedung_id, penanggungjawab, penyewa, start_datetime, end_datetime)
+    new_booking = BookingModel(int(time.time()), gedung_id, nama_penanggungjawab, organisasi.id, start_date, end_date,
+                               start_time, end_time)
     booking_helper.create(new_booking)
 
     return redirect(url_for('admin_booking_view'))
