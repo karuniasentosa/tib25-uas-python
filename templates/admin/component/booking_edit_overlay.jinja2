@@ -3,7 +3,7 @@
         <!-- BACK BOTTON -->
         <button class="btn btn-primary btn-back" onClick="offEdit('{{ booking.id }}')">Back</button>
         <div class="overlay-content">
-            <h2 class="overlay-title">EDIT GEDUNG</h2>
+            <h2 class="overlay-title">EDIT BOOKING</h2>
             <!-- INPUT EDIT MEMBER -->
             <div class="overlay-input">
                 <form action="{{ url_for('admin_booking_edit', id=booking.id) }}" method="post">
